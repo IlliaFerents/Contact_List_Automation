@@ -1,7 +1,7 @@
-Cypress.Commands.add("POSTrequest", (path, payload) => {
+Cypress.Commands.add("POSTrequest", (baseURL, path, payload) => {
   cy.request({
     method: "POST",
-    url: Cypress.env("apiURL") + path,
+    url: baseURL + path,
     body: payload,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
