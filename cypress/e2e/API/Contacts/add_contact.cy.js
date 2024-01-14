@@ -19,7 +19,7 @@ describe("Contact Creation", () => {
       expect(response.body.errors.lastName.message).to.eq("Path `lastName` is required.");
       expect(response.body.errors.firstName.message).to.eq("Path `firstName` is required.");
       expect(response.body.message).to.eq(
-        "Contact validation failed: lastName: Path `lastName` is required., firstName: Path `firstName` is required.",
+        "Contact validation failed: lastName: Path `lastName` is required., firstName: Path `firstName` is required."
       );
     });
   });
