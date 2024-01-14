@@ -1,13 +1,15 @@
+const { faker } = require("@faker-js/faker");
+
 export const randomContactData = {
-  firstName: "Jake",
-  lastName: "Matt",
-  birthdate: "1970-01-01",
-  email: "jdoe@fake.com",
-  phone: "8005555555",
-  street1: "1 Main St.",
-  street2: "Apartment A",
-  city: "Anytown",
-  stateProvince: "KS",
-  postalCode: "12345",
-  country: "USA",
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+  birthdate: faker.date.birthdate().toISOString().split("T")[0], // yyyy-mm-dd
+  email: faker.internet.email().toLowerCase(),
+  phone: faker.string.numeric(8),
+  street1: faker.location.streetAddress(),
+  street2: faker.location.streetAddress(),
+  city: faker.location.city(),
+  stateProvince: faker.location.state(),
+  postalCode: faker.location.zipCode(),
+  country: faker.location.country(),
 };
