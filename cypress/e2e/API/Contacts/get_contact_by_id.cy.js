@@ -1,4 +1,3 @@
-import * as ContactData from "../../../support/helpers/contact_data.js";
 const contactsApiURL = Cypress.env("contactsApiURL");
 
 describe("Contact Search by ID", () => {
