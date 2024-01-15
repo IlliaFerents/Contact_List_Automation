@@ -5,20 +5,18 @@ const { faker } = require("@faker-js/faker");
 const contactsApiURL = Cypress.env("contactsApiURL");
 
 describe("Contact Creation", () => {
-  it("creates a contact with random data", () => {
-    cy.POSTrequest(contactsApiURL, "/", ContactData.validValues).then((response) => {
+  it("successfully creates a contact with random data", () => {
+    cy.POSTrequest(contactsApiURL, ContactData.validValues).then((response) => {
       expect(response.status).to.eq(201);
-
       expect(response.body).to.deep.include(ContactData.validValues);
     });
   });
   it("returns error messages for request with missing required fields", () => {
-    cy.POSTrequest(contactsApiURL, "/", {
+    cy.POSTrequest(contactsApiURL, {
       email: "test@test.com",
       phone: "22222222",
     }).then((response) => {
       expect(response.status).to.eq(400);
-
       assertErrorMessagesAPI(response, {
         lastName: "Path `lastName` is required.",
         firstName: "Path `firstName` is required.",
@@ -26,9 +24,8 @@ describe("Contact Creation", () => {
     });
   });
   it("returns error messages for request with invalid data", () => {
-    cy.POSTrequest(contactsApiURL, "/", ContactData.invalidValues).then((response) => {
+    cy.POSTrequest(contactsApiURL, ContactData.invalidValues).then((response) => {
       expect(response.status).to.eq(400);
-
       assertErrorMessagesAPI(response, {
         email: "Email is invalid",
         phone: "Phone number is invalid",
@@ -38,9 +35,8 @@ describe("Contact Creation", () => {
     });
   });
   it("returns error messages for request with fields values exceeding maximum length", () => {
-    cy.POSTrequest(contactsApiURL, "/", ContactData.maxLenValues).then((response) => {
+    cy.POSTrequest(contactsApiURL, ContactData.maxLenValues).then((response) => {
       expect(response.status).to.eq(400);
-
       assertErrorMessagesAPI(response, {
         firstName: `Path \`firstName\` (\`${ContactData.maxLenValues.firstName}\`) is longer than the maximum allowed length (20).`,
         lastName: `Path \`lastName\` (\`${ContactData.maxLenValues.lastName}\`) is longer than the maximum allowed length (20).`,
