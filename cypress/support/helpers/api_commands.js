@@ -24,3 +24,16 @@ Cypress.Commands.add("GETallContacts", (baseURL) => {
     followRedirect: false,
   });
 });
+
+Cypress.Commands.add("GETcontactByID", (baseURL, id) => {
+  cy.request({
+    method: "GET",
+    url: baseURL + id,
+    headers: {
+      Authorization: `Bearer ${Cypress.env("token")}`,
+      "Content-Type": "application/json",
+    },
+    failOnStatusCode: false,
+    followRedirect: false,
+  });
+});
