@@ -11,3 +11,16 @@ Cypress.Commands.add("POSTrequest", (baseURL, path, payload) => {
     followRedirect: false,
   });
 });
+
+Cypress.Commands.add("GETallContacts", (baseURL) => {
+  cy.request({
+    method: "GET",
+    url: baseURL,
+    headers: {
+      Authorization: `Bearer ${Cypress.env("token")}`,
+      "Content-Type": "application/json",
+    },
+    failOnStatusCode: false,
+    followRedirect: false,
+  });
+});
