@@ -1,7 +1,9 @@
-Cypress.Commands.add("POSTrequest", (baseURL, path, payload) => {
+import * as ContactData from "./contact_data.js";
+
+Cypress.Commands.add("POSTrequest", (baseURL, payload) => {
   cy.request({
     method: "POST",
-    url: baseURL + path,
+    url: baseURL,
     body: payload,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
