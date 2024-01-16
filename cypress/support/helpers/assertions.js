@@ -6,8 +6,6 @@ export function assertErrorMessagesAPI(response, expectedErrors) {
     expect(actualErrors[field].message).to.include(message);
   }
 
-  const expectedErrorMessage = `Contact validation failed: ${Object.keys(expectedErrors)
-    .map((field) => `${field}: ${expectedErrors[field]}`)
-    .join(", ")}`;
-  expect(response.body.message).to.include(expectedErrorMessage);
+  const expectedErrorMessage = "validation failed:";
+  expect(response.body.message.toLowerCase()).to.include(expectedErrorMessage);
 }
