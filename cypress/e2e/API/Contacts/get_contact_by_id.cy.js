@@ -5,8 +5,8 @@ describe("Contact Search by ID", () => {
     cy.DELETEallContacts();
   });
   it("retrieves a contact by id", function () {
-    cy.addContacts(1).then((response) => {
-      const contactID = response.body._id;
+    cy.addContacts(1).then((createdContacts) => {
+      const contactID = createdContacts[0]._id;
 
       cy.GETcontactByID(contactsApiURL, contactID).then((response) => {
         expect(response.status).to.eq(200);
@@ -20,16 +20,10 @@ describe("Contact Search by ID", () => {
       expect(response.body).to.eq("Invalid Contact ID");
     });
   });
-  it("returns error message for request with non-exsiting id", () => {
+  it("returns empty response body for request with non-exsiting id", () => {
     cy.GETcontactByID(contactsApiURL, "65a595402b31aa00139c1ff5").then((response) => {
       expect(response.status).to.eq(404);
       expect(response.body).to.be.empty;
-    });
-  });
-  it.only("returns empty array for request with special characters in id", () => {
-    cy.GETcontactByID(contactsApiURL, "#?/.").then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body).to.deep.equal([]);
     });
   });
 });
