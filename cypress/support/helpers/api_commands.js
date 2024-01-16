@@ -40,6 +40,34 @@ Cypress.Commands.add("GETcontactByID", (baseURL, id) => {
   });
 });
 
+Cypress.Commands.add("updateContactDataByID", (baseURL, payload, id) => {
+  cy.request({
+    method: "PUT",
+    url: baseURL + id,
+    body: payload,
+    headers: {
+      Authorization: `Bearer ${Cypress.env("token")}`,
+      "Content-Type": "application/json",
+    },
+    failOnStatusCode: false,
+    followRedirect: false,
+  });
+});
+
+Cypress.Commands.add("patchContactDataByID", (baseURL, payload, id) => {
+  cy.request({
+    method: "PATCH",
+    url: baseURL + id,
+    body: payload,
+    headers: {
+      Authorization: `Bearer ${Cypress.env("token")}`,
+      "Content-Type": "application/json",
+    },
+    failOnStatusCode: false,
+    followRedirect: false,
+  });
+});
+
 Cypress.Commands.add("DELETEcontactByID", (baseURL, id) => {
   cy.request({
     method: "DELETE",
