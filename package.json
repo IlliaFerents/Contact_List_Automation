@@ -2,7 +2,9 @@
   "name": "contact_list_automation",
   "version": "1.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:cloud": "npx cypress run --record --key c7b7d45d-9da5-417d-8cb7-aeaee962a26d",
+    "cy:all": "npx cypress run"
+
   },
   "author": "IlliaFerents",
   "license": "ISC",
