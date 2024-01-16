@@ -5,7 +5,7 @@ const { faker } = require("@faker-js/faker");
 const contactsApiURL = Cypress.env("contactsApiURL");
 
 describe("Contact Creation", () => {
-  it("successfully creates a contact with random data", () => {
+  it("creates a contact with random data", () => {
     cy.POSTrequest(contactsApiURL, ContactData.validValues).then((response) => {
       expect(response.status).to.eq(201);
       expect(response.body).to.deep.include(ContactData.validValues);
