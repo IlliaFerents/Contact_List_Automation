@@ -4,7 +4,7 @@ const { faker } = require("@faker-js/faker");
 
 const contactsApiURL = Cypress.env("contactsApiURL");
 
-describe("Contact Creation", () => {
+describe("Contact Update", () => {
   before(() => {
     cy.addContacts(3).then((createdContacts) => {
       cy.wrap(createdContacts[0]._id).as("contactOneID");
