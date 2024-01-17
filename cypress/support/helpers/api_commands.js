@@ -1,9 +1,10 @@
 import * as ContactData from "./contact_data.js";
+const contactsApiURL = Cypress.env("contactsApiURL");
 
-Cypress.Commands.add("addContact", (baseURL, payload) => {
+Cypress.Commands.add("addContact", (payload) => {
   cy.request({
     method: "POST",
-    url: baseURL,
+    url: contactsApiURL,
     body: payload,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
@@ -14,10 +15,10 @@ Cypress.Commands.add("addContact", (baseURL, payload) => {
   });
 });
 
-Cypress.Commands.add("getAllContacts", (baseURL) => {
+Cypress.Commands.add("getAllContacts", () => {
   cy.request({
     method: "GET",
-    url: baseURL,
+    url: contactsApiURL,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
       "Content-Type": "application/json",
@@ -27,10 +28,10 @@ Cypress.Commands.add("getAllContacts", (baseURL) => {
   });
 });
 
-Cypress.Commands.add("getContactByID", (baseURL, id) => {
+Cypress.Commands.add("getContactByID", (id) => {
   cy.request({
     method: "GET",
-    url: baseURL + id,
+    url: contactsApiURL + id,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
       "Content-Type": "application/json",
@@ -40,10 +41,10 @@ Cypress.Commands.add("getContactByID", (baseURL, id) => {
   });
 });
 
-Cypress.Commands.add("updateContactByID", (baseURL, payload, id) => {
+Cypress.Commands.add("updateContactByID", (payload, id) => {
   cy.request({
     method: "PUT",
-    url: baseURL + id,
+    url: contactsApiURL + id,
     body: payload,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
@@ -54,10 +55,10 @@ Cypress.Commands.add("updateContactByID", (baseURL, payload, id) => {
   });
 });
 
-Cypress.Commands.add("patchContactByID", (baseURL, payload, id) => {
+Cypress.Commands.add("patchContactByID", (payload, id) => {
   cy.request({
     method: "PATCH",
-    url: baseURL + id,
+    url: contactsApiURL + id,
     body: payload,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
@@ -68,10 +69,10 @@ Cypress.Commands.add("patchContactByID", (baseURL, payload, id) => {
   });
 });
 
-Cypress.Commands.add("deleteContactByID", (baseURL, id) => {
+Cypress.Commands.add("deleteContactByID", (id) => {
   cy.request({
     method: "DELETE",
-    url: baseURL + id,
+    url: contactsApiURL + id,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
       "Content-Type": "application/json",
@@ -81,11 +82,11 @@ Cypress.Commands.add("deleteContactByID", (baseURL, id) => {
   });
 });
 
-Cypress.Commands.add("deleteMultipleContacts", (baseURL, ids) => {
+Cypress.Commands.add("deleteMultipleContacts", (ids) => {
   ids.forEach((id) => {
     cy.request({
       method: "DELETE",
-      url: baseURL + id,
+      url: contactsApiURL + id,
       headers: {
         Authorization: `Bearer ${Cypress.env("token")}`,
         "Content-Type": "application/json",
@@ -99,7 +100,7 @@ Cypress.Commands.add("deleteMultipleContacts", (baseURL, ids) => {
 Cypress.Commands.add("deleteAllContacts", () => {
   cy.request({
     method: "GET",
-    url: "https://thinking-tester-contact-list.herokuapp.com/contacts",
+    url: contactsApiURL,
     headers: {
       Authorization: `Bearer ${Cypress.env("token")}`,
       "Content-Type": "application/json",
@@ -108,7 +109,7 @@ Cypress.Commands.add("deleteAllContacts", () => {
     response.body.forEach((contact) => {
       cy.request({
         method: "DELETE",
-        url: `https://thinking-tester-contact-list.herokuapp.com/contacts/${contact._id}`,
+        url: `${contactsApiURL}${contact._id}`,
         headers: {
           Authorization: `Bearer ${Cypress.env("token")}`,
           "Content-Type": "application/json",
@@ -123,10 +124,7 @@ Cypress.Commands.add("addMultipleContacts", (numOfContacts) => {
   const createdContacts = [];
 
   for (let i = 0; i < numOfContacts; i++) {
-    cy.addContact(
-      "https://thinking-tester-contact-list.herokuapp.com/contacts/",
-      ContactData.validValues
-    ).then((response) => {
+    cy.addContact(ContactData.validValues).then((response) => {
       createdContacts.push(response.body);
     });
   }
