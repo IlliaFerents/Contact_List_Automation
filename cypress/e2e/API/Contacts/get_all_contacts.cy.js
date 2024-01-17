@@ -8,7 +8,7 @@ describe("Contact Search", () => {
   it("retrieves a list of all contacts", () => {
     cy.addMultipleContacts(4);
 
-    cy.getAllContacts(contactsApiURL).then((response) => {
+    cy.getAllContacts().then((response) => {
       expect(response.status).to.eq(200);
 
       expect(response.body.length).to.eq(4);
@@ -18,7 +18,7 @@ describe("Contact Search", () => {
     });
   });
   it("retrieves an empty list when no contacts added", () => {
-    cy.getAllContacts(contactsApiURL).then((response) => {
+    cy.getAllContacts().then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.length).to.eq(0);
     });

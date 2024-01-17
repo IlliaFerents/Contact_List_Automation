@@ -14,35 +14,31 @@ describe("Contact Update", () => {
     });
   });
   it("updates an existing contact with random data", function () {
-    cy.getContactByID(contactsApiURL, this.contactOneID).then((response) => {
+    cy.getContactByID(this.contactOneID).then((response) => {
       const originalContactData = response.body;
 
-      cy.updateContactByID(contactsApiURL, ContactData.validValues, this.contactOneID).then(
-        (response) => {
-          expect(response.status).to.eq(200);
-          expect(response.body).not.to.deep.equal(originalContactData);
+      cy.updateContactByID(ContactData.validValues, this.contactOneID).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).not.to.deep.equal(originalContactData);
 
-          cy.getContactByID(contactsApiURL, this.contactOneID).then((response) => {
-            expect(response.body).to.deep.include(ContactData.validValues);
-          });
-        }
-      );
+        cy.getContactByID(this.contactOneID).then((response) => {
+          expect(response.body).to.deep.include(ContactData.validValues);
+        });
+      });
     });
   });
   it("updates an existing contact with incomplete data", function () {
-    cy.getContactByID(contactsApiURL, this.contactTwoID).then((response) => {
+    cy.getContactByID(this.contactTwoID).then((response) => {
       const originalContactData = response.body;
 
-      cy.updateContactByID(contactsApiURL, ContactData.requiredOnlyFields, this.contactTwoID).then(
-        (response) => {
-          expect(response.status).to.eq(200);
-          expect(response.body).not.to.deep.equal(originalContactData);
+      cy.updateContactByID(ContactData.requiredOnlyFields, this.contactTwoID).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).not.to.deep.equal(originalContactData);
 
-          cy.getContactByID(contactsApiURL, this.contactTwoID).then((response) => {
-            expect(response.body).to.deep.include(ContactData.requiredOnlyFields);
-          });
-        }
-      );
+        cy.getContactByID(this.contactTwoID).then((response) => {
+          expect(response.body).to.deep.include(ContactData.requiredOnlyFields);
+        });
+      });
     });
   });
 });
