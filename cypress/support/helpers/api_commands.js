@@ -1,6 +1,6 @@
 import * as ContactData from "./contact_data.js";
 
-Cypress.Commands.add("POSTrequest", (baseURL, payload) => {
+Cypress.Commands.add("addContact", (baseURL, payload) => {
   cy.request({
     method: "POST",
     url: baseURL,
@@ -14,7 +14,7 @@ Cypress.Commands.add("POSTrequest", (baseURL, payload) => {
   });
 });
 
-Cypress.Commands.add("GETallContacts", (baseURL) => {
+Cypress.Commands.add("getAllContacts", (baseURL) => {
   cy.request({
     method: "GET",
     url: baseURL,
@@ -27,7 +27,7 @@ Cypress.Commands.add("GETallContacts", (baseURL) => {
   });
 });
 
-Cypress.Commands.add("GETcontactByID", (baseURL, id) => {
+Cypress.Commands.add("getContactByID", (baseURL, id) => {
   cy.request({
     method: "GET",
     url: baseURL + id,
@@ -40,7 +40,7 @@ Cypress.Commands.add("GETcontactByID", (baseURL, id) => {
   });
 });
 
-Cypress.Commands.add("updateContactDataByID", (baseURL, payload, id) => {
+Cypress.Commands.add("updateContactByID", (baseURL, payload, id) => {
   cy.request({
     method: "PUT",
     url: baseURL + id,
@@ -54,7 +54,7 @@ Cypress.Commands.add("updateContactDataByID", (baseURL, payload, id) => {
   });
 });
 
-Cypress.Commands.add("patchContactDataByID", (baseURL, payload, id) => {
+Cypress.Commands.add("patchContactByID", (baseURL, payload, id) => {
   cy.request({
     method: "PATCH",
     url: baseURL + id,
@@ -68,7 +68,7 @@ Cypress.Commands.add("patchContactDataByID", (baseURL, payload, id) => {
   });
 });
 
-Cypress.Commands.add("DELETEcontactByID", (baseURL, id) => {
+Cypress.Commands.add("deleteContactByID", (baseURL, id) => {
   cy.request({
     method: "DELETE",
     url: baseURL + id,
@@ -81,7 +81,7 @@ Cypress.Commands.add("DELETEcontactByID", (baseURL, id) => {
   });
 });
 
-Cypress.Commands.add("DELETEmultipleContactsByID", (baseURL, ids) => {
+Cypress.Commands.add("deleteMultipleContacts", (baseURL, ids) => {
   ids.forEach((id) => {
     cy.request({
       method: "DELETE",
@@ -96,7 +96,7 @@ Cypress.Commands.add("DELETEmultipleContactsByID", (baseURL, ids) => {
   });
 });
 
-Cypress.Commands.add("DELETEallContacts", () => {
+Cypress.Commands.add("deleteAllContacts", () => {
   cy.request({
     method: "GET",
     url: "https://thinking-tester-contact-list.herokuapp.com/contacts",
@@ -119,11 +119,11 @@ Cypress.Commands.add("DELETEallContacts", () => {
   });
 });
 
-Cypress.Commands.add("addContacts", (numOfContacts) => {
+Cypress.Commands.add("addMultipleContacts", (numOfContacts) => {
   const createdContacts = [];
 
   for (let i = 0; i < numOfContacts; i++) {
-    cy.POSTrequest(
+    cy.addContact(
       "https://thinking-tester-contact-list.herokuapp.com/contacts/",
       ContactData.validValues
     ).then((response) => {

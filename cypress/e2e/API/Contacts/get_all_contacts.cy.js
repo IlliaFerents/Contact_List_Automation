@@ -3,12 +3,12 @@ const contactsApiURL = Cypress.env("contactsApiURL");
 
 describe("Contact Search", () => {
   beforeEach(() => {
-    cy.DELETEallContacts();
+    cy.deleteAllContacts();
   });
   it("retrieves a list of all contacts", () => {
-    cy.addContacts(4);
+    cy.addMultipleContacts(4);
 
-    cy.GETallContacts(contactsApiURL).then((response) => {
+    cy.getAllContacts(contactsApiURL).then((response) => {
       expect(response.status).to.eq(200);
 
       expect(response.body.length).to.eq(4);
@@ -18,7 +18,7 @@ describe("Contact Search", () => {
     });
   });
   it("retrieves an empty list when no contacts added", () => {
-    cy.GETallContacts(contactsApiURL).then((response) => {
+    cy.getAllContacts(contactsApiURL).then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.length).to.eq(0);
     });
