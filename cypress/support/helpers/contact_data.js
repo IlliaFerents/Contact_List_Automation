@@ -30,3 +30,8 @@ export const invalidValues = {
   birthdate: faker.string.alpha(5),
   postalCode: faker.string.alpha(5),
 };
+
+export const requiredOnlyFields = {
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+};
