@@ -23,8 +23,8 @@ jobs:
         if: ${{ github.event.inputs.smoke == 'true' }}      
         uses: cypress-io/github-action@v6
         with:
+          install: false
           env: grepTags=@smoke
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          env: grepTags=@smoke
