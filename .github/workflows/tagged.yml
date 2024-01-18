@@ -21,7 +21,7 @@ jobs:
 
       - name: Cypress run
         if: ${{ github.event.inputs.smoke == 'true' }}      
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v2
         with:
           env: grepTags=@smoke
         env:
