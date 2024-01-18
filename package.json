@@ -4,7 +4,6 @@
   "scripts": {
     "cy:cloud": "npx cypress run --record --key c7b7d45d-9da5-417d-8cb7-aeaee962a26d",
     "cy:all": "npx cypress run"
-
   },
   "author": "IlliaFerents",
   "license": "ISC",
@@ -19,6 +18,8 @@
     "eslint-plugin-n": "^16.3.1",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-promise": "^6.1.1",
+    "find-cypress-specs": "^1.38.5",
+    "find-test-names": "^1.28.18",
     "prettier": "^3.0.3"
   }
 }
