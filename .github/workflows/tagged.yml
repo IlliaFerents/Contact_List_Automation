@@ -1,21 +1,33 @@
-name: Tagged
+name: tagged
 on:
   workflow_dispatch:
     inputs:
+      # these inputs will be shown to the user on GitHub Actions page
+      # and the user can simply check off the tags to run
       smoke:
         description: Run the tests tagged "@smoke"
         required: false
         type: boolean
-
+    
 jobs:
-  tagged-run:
-    runs-on: ubuntu-latest
+  tagged:
+    runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Print GitHub event inputs
+        env:
+          EVENT: ${{ toJson(github.event.inputs) }}
+        run: echo "$EVENT"
 
-      - name: Cypress run
-        if: ${{ github.event.inputs.smoke == 'true' }}      
+      - name: Checkout 🛎
+        uses: actions/checkout@v4
+      # unfortunately, because GitHub Actions expressions
+      # are limited, I could not come up with a better way
+      # to map boolean values to the tag strings
+
+      # https://github.com/cypress-io/github-action
+      - name: Run smoke tests
+        if: ${{ github.event.inputs.smoke == 'true' }}
         uses: cypress-io/github-action@v6
         with:
           env: grepTags=@smoke
+
