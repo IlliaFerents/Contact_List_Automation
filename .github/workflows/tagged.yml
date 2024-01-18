@@ -10,11 +10,6 @@ on:
 jobs:
   tagged-run:
     runs-on: ubuntu-latest
-    
-    strategy:
-      fail-fast: false 
-      matrix:
-        containers: [1] 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
