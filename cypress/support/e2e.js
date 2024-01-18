@@ -16,6 +16,8 @@
 // Import commands.js using ES2015 syntax:
 import "./commands";
 import "./helpers/api_commands";
+import registerCypressGrep from "@bahmutov/cy-grep/src/support";
+registerCypressGrep();
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
