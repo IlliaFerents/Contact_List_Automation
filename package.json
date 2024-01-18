@@ -8,6 +8,7 @@
   "author": "IlliaFerents",
   "license": "ISC",
   "devDependencies": {
+    "@bahmutov/cy-grep": "^1.9.17",
     "@faker-js/faker": "^8.2.0",
     "cypress": "13.6.2",
     "eslint": "^8.53.0",
