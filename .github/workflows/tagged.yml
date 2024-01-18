@@ -23,9 +23,7 @@ jobs:
         if: ${{ github.event.inputs.smoke == 'true' }}      
         uses: cypress-io/github-action@v6
         with:
-          record: true
-          parallel: true 
-          spec: cypress/e2e/spec.cy.js
+          env: grepTags=@smoke
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
