@@ -1,4 +1,4 @@
-import * as ContactData from "./contact_data.js";
+import * as ContactData from "./contact_data_helper.js";
 const contactsApiURL = Cypress.env("contactsApiURL");
 
 Cypress.Commands.add("addContact", (payload) => {
@@ -124,7 +124,7 @@ Cypress.Commands.add("addMultipleContacts", (numOfContacts) => {
   const createdContacts = [];
 
   for (let i = 0; i < numOfContacts; i++) {
-    cy.addContact(ContactData.validValues).then((response) => {
+    cy.addContact(ContactData.generateValidValues()).then((response) => {
       createdContacts.push(response.body);
     });
   }

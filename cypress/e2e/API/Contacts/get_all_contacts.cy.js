@@ -1,4 +1,4 @@
-import * as ContactData from "../../../support/helpers/contact_data.js";
+import * as ContactData from "../../../support/helpers/contact_data_helper.js";
 const contactsApiURL = Cypress.env("contactsApiURL");
 
 describe("Contact Search", () => {
