@@ -22,7 +22,7 @@ jobs:
 
       # https://github.com/cypress-io/github-action
       - name: Run smoke tests 🚀
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v6
         with:
           env: grepTags=@smoke
 
@@ -35,6 +35,6 @@ jobs:
 
 
       - name: Run regression tests 🚀
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v6
         with:
           env: grepTags=@regression
