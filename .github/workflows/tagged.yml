@@ -43,7 +43,8 @@ jobs:
         with:
           env: grepTags=@api
           record: true
-          parallel: true 
+          parallel: true
+          group: 'API - Parallel'
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
