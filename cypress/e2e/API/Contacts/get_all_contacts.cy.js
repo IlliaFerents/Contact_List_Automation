@@ -5,7 +5,7 @@ describe("Contact Search", () => {
   beforeEach(() => {
     cy.deleteAllContacts();
   });
-  it("retrieves a list of all contacts", () => {
+  it("retrieves a list of all contacts", { tags: ["@smoke", "@api"] }, () => {
     cy.addMultipleContacts(4);
 
     cy.getAllContacts().then((response) => {
@@ -17,7 +17,7 @@ describe("Contact Search", () => {
       });
     });
   });
-  it("retrieves an empty list when no contacts added", () => {
+  it("retrieves an empty list when no contacts added", { tags: ["@api"] }, () => {
     cy.getAllContacts().then((response) => {
       expect(response.status).to.eq(200);
       expect(response.body.length).to.eq(0);

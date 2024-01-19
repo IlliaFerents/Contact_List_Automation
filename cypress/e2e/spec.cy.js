@@ -1,8 +1,8 @@
 describe("template spec", () => {
-  it("runs with a tag", { tags: "@smoke" }, () => {
+  it("runs with a tag", () => {
     cy.visit("https://example.cypress.io");
   });
-  it("it not tagged", { tags: "@smoke" }, () => {
+  it("it not tagged", () => {
     cy.visit("https://example.cypress.io");
   });
 });
