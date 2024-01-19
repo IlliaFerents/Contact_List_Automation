@@ -1,3 +1,2 @@
 node_modules
-cypress.env.json
 .github/workflows/api_specs.yml
