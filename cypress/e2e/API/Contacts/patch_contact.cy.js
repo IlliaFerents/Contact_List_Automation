@@ -5,85 +5,87 @@ const { faker } = require("@faker-js/faker");
 const contactsApiURL = Cypress.env("contactsApiURL");
 
 describe("Contact Partial Update", () => {
-  before(() => {
-    cy.deleteAllContacts();
-  });
-  beforeEach(() => {
-    cy.addMultipleContacts(1).then((createdContact) => {
-      cy.wrap(createdContact[0]._id).as("contactID");
+  context("PATCH /contacts:id", () => {
+    before(() => {
+      cy.deleteAllContacts();
     });
-  });
-  it("patches an existing contact with random data", { tags: ["@smoke", "@api"] }, function () {
-    cy.getContactByID(this.contactID).then((response) => {
-      const originalContactData = response.body;
-
-      cy.patchContactByID(ContactData.requiredOnlyFields, this.contactID).then((response) => {
-        expect(response.status).to.eq(200);
-        expect(response.body).not.to.deep.equal(originalContactData);
-
-        cy.getContactByID(this.contactID).then((response) => {
-          expect(response.body).to.deep.include(ContactData.requiredOnlyFields);
-        });
+    beforeEach(() => {
+      cy.addMultipleContacts(1).then((createdContact) => {
+        cy.wrap(createdContact[0]._id).as("contactID");
       });
     });
-  });
-  it("patches all properties of an existing contact", { tags: ["@api"] }, function () {
-    cy.getContactByID(this.contactID).then((response) => {
-      const originalContactData = response.body;
+    it("patches an existing contact with random data", { tags: ["@smoke", "@api"] }, function () {
+      cy.getContactByID(this.contactID).then((response) => {
+        const originalContactData = response.body;
 
-      cy.patchContactByID(ContactData.validValues, this.contactID).then((response) => {
-        expect(response.status).to.eq(200);
-        expect(response.body).not.to.deep.equal(originalContactData);
+        cy.patchContactByID(ContactData.requiredOnlyFields, this.contactID).then((response) => {
+          expect(response.status).to.eq(200);
+          expect(response.body).not.to.deep.equal(originalContactData);
 
-        cy.getContactByID(this.contactID).then((response) => {
-          expect(response.body).to.deep.include(ContactData.validValues);
-        });
-      });
-    });
-  });
-  it("patches existing contact with missing required fields", { tags: ["@api"] }, function () {
-    cy.getContactByID(this.contactID).then((response) => {
-      const originalContactData = response.body;
-
-      cy.patchContactByID(
-        {
-          email: ContactData.validValues.email,
-          phone: ContactData.validValues.phone,
-        },
-        this.contactID
-      ).then((response) => {
-        expect(response.status).to.eq(200);
-
-        cy.getContactByID(this.contactID).then((response) => {
-          expect(response.body).to.deep.include({
-            email: ContactData.validValues.email,
-            phone: ContactData.validValues.phone,
+          cy.getContactByID(this.contactID).then((response) => {
+            expect(response.body).to.deep.include(ContactData.requiredOnlyFields);
           });
         });
       });
     });
-  });
-  it("returns unmodified contact for request with invalid keys", { tags: ["@api"] }, function () {
-    cy.getContactByID(this.contactID).then((response) => {
-      const originalContactData = response.body;
+    it("patches all properties of an existing contact", { tags: ["@api"] }, function () {
+      cy.getContactByID(this.contactID).then((response) => {
+        const originalContactData = response.body;
 
-      cy.patchContactByID(
-        {
-          firstname: ContactData.validValues.firstName,
-          lastname: ContactData.validValues.lastName,
-          Phone: ContactData.validValues.phone,
-        },
-        this.contactID
-      ).then((response) => {
-        expect(response.status).to.eq(200);
-        expect(response.body).to.deep.include(originalContactData);
+        cy.patchContactByID(ContactData.validValues, this.contactID).then((response) => {
+          expect(response.status).to.eq(200);
+          expect(response.body).not.to.deep.equal(originalContactData);
+
+          cy.getContactByID(this.contactID).then((response) => {
+            expect(response.body).to.deep.include(ContactData.validValues);
+          });
+        });
       });
     });
-  });
-  it(
-    "returns error messages for patching existing contact with invalid data",
-    { tags: ["@api"] },
-    function () {
+    it("patches existing contact with missing required fields", { tags: ["@api"] }, function () {
+      cy.getContactByID(this.contactID).then((response) => {
+        const originalContactData = response.body;
+
+        cy.patchContactByID(
+          {
+            email: ContactData.validValues.email,
+            phone: ContactData.validValues.phone,
+          },
+          this.contactID
+        ).then((response) => {
+          expect(response.status).to.eq(200);
+
+          cy.getContactByID(this.contactID).then((response) => {
+            expect(response.body).to.deep.include({
+              email: ContactData.validValues.email,
+              phone: ContactData.validValues.phone,
+            });
+          });
+        });
+      });
+    });
+    it(
+      "returns unmodified contact when patching a contact with invalid keys",
+      { tags: ["@api"] },
+      function () {
+        cy.getContactByID(this.contactID).then((response) => {
+          const originalContactData = response.body;
+
+          cy.patchContactByID(
+            {
+              firstname: ContactData.validValues.firstName,
+              lastname: ContactData.validValues.lastName,
+              Phone: ContactData.validValues.phone,
+            },
+            this.contactID
+          ).then((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body).to.deep.include(originalContactData);
+          });
+        });
+      }
+    );
+    it("error when patching existing contact with invalid data", { tags: ["@api"] }, function () {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
@@ -97,6 +99,6 @@ describe("Contact Partial Update", () => {
           });
         });
       });
-    }
-  );
+    });
+  });
 });
