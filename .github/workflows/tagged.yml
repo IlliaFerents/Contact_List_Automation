@@ -28,6 +28,12 @@ jobs:
   api:
     if: ${{ github.event.inputs.api == 'true' }}
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false 
+      matrix:
+        containers: [1, 2, 3] 
+
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v4
@@ -36,3 +42,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           env: grepTags=@api
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
