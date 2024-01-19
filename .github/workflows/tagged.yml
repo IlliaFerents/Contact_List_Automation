@@ -1,4 +1,4 @@
-name: tagged
+name: Cypress Tagged Run
 on:
   workflow_dispatch:
     inputs:
@@ -6,8 +6,8 @@ on:
         description: Run the tests tagged "@smoke"
         required: false
         type: boolean
-      regression:
-        description: Run the tests tagged "@regression"
+      api:
+        description: Run the tests tagged "@api"
         required: false
         type: boolean
     
@@ -20,21 +20,19 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@v4
 
-      # https://github.com/cypress-io/github-action
       - name: Run smoke tests 🚀
         uses: cypress-io/github-action@v6
         with:
           env: grepTags=@smoke
 
-  regression:
-    if: ${{ github.event.inputs.regression == 'true' }}
+  api:
+    if: ${{ github.event.inputs.api == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v4
 
-
-      - name: Run regression tests 🚀
+      - name: Run api tests 🚀
         uses: cypress-io/github-action@v6
         with:
-          env: grepTags=@regression
+          env: grepTags=@api
