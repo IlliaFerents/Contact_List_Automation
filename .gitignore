@@ -1,2 +1,3 @@
 node_modules
 .github/workflows/api_specs.yml
+cypress/screenshots
