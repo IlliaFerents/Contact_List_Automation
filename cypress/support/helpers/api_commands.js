@@ -4,7 +4,7 @@ Cypress.Commands.add("apiRequest", (method, baseUrl, url = "", payload) => {
     url: baseUrl + url,
     body: payload,
     headers: {
-      Authorization: `Bearer ${Cypress.env("token")}`,
+      Authorization: `Bearer ${Cypress.env("BEARER_TOKEN")}`,
       "Content-Type": "application/json",
     },
     failOnStatusCode: false,
