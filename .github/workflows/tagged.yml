@@ -48,4 +48,5 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BEARER_TOKEN: ${{ secrets.BEARER_TOKEN }}
   
