@@ -1,6 +1,5 @@
 import * as ContactData from "../../../support/helpers/contact_data_helper.js";
 import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
-const { faker } = require("@faker-js/faker");
 
 const contactsApiURL = Cypress.env("contactsApiURL");
 
@@ -10,6 +9,13 @@ describe("Contact Creation", () => {
       cy.addContact(ContactData.validValues).then((response) => {
         expect(response.status).to.eq(201);
         expect(response.body).to.deep.include(ContactData.validValues);
+
+        const contactID = response.body._id;
+
+        cy.getContactByID(contactID).then((response) => {
+          expect(response.status).to.eq(200);
+          expect(response.body._id).to.eq(contactID);
+        });
       });
     });
     it("error when adding contact with missing required fields", { tags: ["@api"] }, () => {
