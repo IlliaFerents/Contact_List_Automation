@@ -18,7 +18,7 @@ describe("Contact Partial Update", () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.patchContactByID(ContactData.requiredOnlyFields, this.contactID).then((response) => {
+        cy.patchContactByID(this.contactID, ContactData.requiredOnlyFields).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).not.to.deep.equal(originalContactData);
 
@@ -32,7 +32,7 @@ describe("Contact Partial Update", () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.patchContactByID(ContactData.validValues, this.contactID).then((response) => {
+        cy.patchContactByID(this.contactID, ContactData.validValues).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).not.to.deep.equal(originalContactData);
 
@@ -46,13 +46,10 @@ describe("Contact Partial Update", () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.patchContactByID(
-          {
-            email: ContactData.validValues.email,
-            phone: ContactData.validValues.phone,
-          },
-          this.contactID
-        ).then((response) => {
+        cy.patchContactByID(this.contactID, {
+          email: ContactData.validValues.email,
+          phone: ContactData.validValues.phone,
+        }).then((response) => {
           expect(response.status).to.eq(200);
 
           cy.getContactByID(this.contactID).then((response) => {
@@ -71,14 +68,11 @@ describe("Contact Partial Update", () => {
         cy.getContactByID(this.contactID).then((response) => {
           const originalContactData = response.body;
 
-          cy.patchContactByID(
-            {
-              firstname: ContactData.validValues.firstName,
-              lastname: ContactData.validValues.lastName,
-              Phone: ContactData.validValues.phone,
-            },
-            this.contactID
-          ).then((response) => {
+          cy.patchContactByID(this.contactID, {
+            firstname: ContactData.validValues.firstName,
+            lastname: ContactData.validValues.lastName,
+            Phone: ContactData.validValues.phone,
+          }).then((response) => {
             expect(response.status).to.eq(200);
             expect(response.body).to.deep.include(originalContactData);
           });
@@ -89,7 +83,7 @@ describe("Contact Partial Update", () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.patchContactByID(ContactData.invalidValues, this.contactID).then((response) => {
+        cy.patchContactByID(this.contactID, ContactData.invalidValues).then((response) => {
           expect(response.status).to.eq(400);
           assertAPIerrorMessages(response, {
             email: "Email is invalid",

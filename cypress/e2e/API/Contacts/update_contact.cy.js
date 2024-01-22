@@ -18,7 +18,7 @@ describe("Contact Update", () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.updateContactByID(ContactData.validValues, this.contactID).then((response) => {
+        cy.updateContactByID(this.contactID, ContactData.validValues).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).not.to.deep.equal(originalContactData);
 
@@ -32,7 +32,7 @@ describe("Contact Update", () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.updateContactByID(ContactData.requiredOnlyFields, this.contactID).then((response) => {
+        cy.updateContactByID(this.contactID, ContactData.requiredOnlyFields).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).not.to.deep.equal(originalContactData);
 
@@ -49,13 +49,10 @@ describe("Contact Update", () => {
         cy.getContactByID(this.contactID).then((response) => {
           const originalContactData = response.body;
 
-          cy.updateContactByID(
-            {
-              email: ContactData.validValues.email,
-              phone: ContactData.validValues.phone,
-            },
-            this.contactID
-          ).then((response) => {
+          cy.updateContactByID(this.contactID, {
+            email: ContactData.validValues.email,
+            phone: ContactData.validValues.phone,
+          }).then((response) => {
             expect(response.status).to.eq(400);
             assertAPIerrorMessages(response, {
               lastName: "Path `lastName` is required.",
@@ -72,7 +69,7 @@ describe("Contact Update", () => {
         cy.getContactByID(this.contactID).then((response) => {
           const originalContactData = response.body;
 
-          cy.updateContactByID(ContactData.invalidValues, this.contactID).then((response) => {
+          cy.updateContactByID(this.contactID, ContactData.invalidValues).then((response) => {
             expect(response.status).to.eq(400);
             assertAPIerrorMessages(response, {
               email: "Email is invalid",
@@ -91,14 +88,11 @@ describe("Contact Update", () => {
         cy.getContactByID(this.contactID).then((response) => {
           const originalContactData = response.body;
 
-          cy.updateContactByID(
-            {
-              firstname: ContactData.validValues.firstName,
-              lastname: ContactData.validValues.lastName,
-              Phone: ContactData.validValues.phone,
-            },
-            this.contactID
-          ).then((response) => {
+          cy.updateContactByID(this.contactID, {
+            firstname: ContactData.validValues.firstName,
+            lastname: ContactData.validValues.lastName,
+            Phone: ContactData.validValues.phone,
+          }).then((response) => {
             expect(response.status).to.eq(400);
             assertAPIerrorMessages(response, {
               lastName: "Path `lastName` is required.",
