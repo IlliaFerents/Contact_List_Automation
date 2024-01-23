@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with: 
            name: cypress-mochawesome-report
-           path: cypress/reporting
+           path: cypress/reports/html
            retention-days: 3
 
   api:
