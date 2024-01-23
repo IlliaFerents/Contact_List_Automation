@@ -1,29 +1,30 @@
 import * as ContactData from "./contact_data_helper.js";
+import ApiRequest from "./api_commands.js";
 
-const contactsApiURL = Cypress.env("CONTACTS_API_URL");
+const api = new ApiRequest(Cypress.env("CONTACTS_API_URL"));
 
 Cypress.Commands.add("addContact", (payload) => {
-  cy.apiRequest("POST", contactsApiURL, "", payload);
+  api.request("POST", "", payload);
 });
 
 Cypress.Commands.add("getAllContacts", () => {
-  cy.apiRequest("GET", contactsApiURL);
+  api.request("GET");
 });
 
 Cypress.Commands.add("getContactByID", (id) => {
-  cy.apiRequest("GET", contactsApiURL, id);
+  api.request("GET", id);
 });
 
 Cypress.Commands.add("updateContactByID", (id, payload) => {
-  cy.apiRequest("PUT", contactsApiURL, id, payload);
+  api.request("PUT", id, payload);
 });
 
 Cypress.Commands.add("patchContactByID", (id, payload) => {
-  cy.apiRequest("PATCH", contactsApiURL, id, payload);
+  api.request("PATCH", id, payload);
 });
 
 Cypress.Commands.add("deleteContactByID", (id) => {
-  cy.apiRequest("DELETE", contactsApiURL, id);
+  api.request("DELETE", id);
 });
 
 Cypress.Commands.add("deleteMultipleContacts", (ids) => {
@@ -33,7 +34,7 @@ Cypress.Commands.add("deleteMultipleContacts", (ids) => {
 });
 
 Cypress.Commands.add("deleteAllContacts", () => {
-  cy.getAllContacts(contactsApiURL).then((response) => {
+  cy.getAllContacts().then((response) => {
     response.body.forEach((contact) => {
       cy.deleteContactByID(contact._id);
     });
