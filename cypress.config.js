@@ -7,8 +7,9 @@ module.exports = defineConfig({
     charts: true,
     embeddedScreenshots: true,
     inlineAssets: true,
-    reportFilename: "[status]_[datetime]-report",
-    timestamp: "shortDate",
+    reportFilename: "[status]_[datetime]_report",
+    timestamp: "dd-mmm",
+    overwrite: false,
   },
   projectId: "g6at4p",
   e2e: {
