@@ -1,5 +1,4 @@
 node_modules
-cypress/reports
 cypress/screenshots
 cypress.env.json
 .github/workflows/api_specs.yml
