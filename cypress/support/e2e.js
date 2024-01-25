@@ -17,6 +17,7 @@
 import "./commands";
 import "./helpers/api_commands";
 import "./helpers/contact_api_commands";
+import "./helpers/users_api_commands";
 import "cypress-mochawesome-reporter/register";
 import registerCypressGrep from "@cypress/grep/src/support";
 registerCypressGrep();
