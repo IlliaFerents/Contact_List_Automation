@@ -1,8 +1,6 @@
 import * as ContactData from "../../../support/helpers/contact_data_helper.js";
 import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
 
-const contactsApiURL = Cypress.env("contactsApiURL");
-
 describe("Contact Creation", () => {
   context("POST /contacts", () => {
     it("creates a contact with random data", { tags: ["@smoke", "@api"] }, () => {
@@ -58,11 +56,7 @@ describe("Contact Creation", () => {
       }
     );
     it("error when adding contact with invalid keys", { tags: ["@api"] }, () => {
-      cy.addContact({
-        firstname: ContactData.validValues.firstName,
-        lastname: ContactData.validValues.lastName,
-        Phone: ContactData.validValues.phone,
-      }).then((response) => {
+      cy.addContact(ContactData.invalidKeys).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {
           lastName: "Path `lastName` is required.",
