@@ -1,5 +1,3 @@
-const contactsApiURL = Cypress.env("contactsApiURL");
-
 describe("Contact Deletion by ID", () => {
   context("DELETE /contacts/:id", () => {
     before(() => {

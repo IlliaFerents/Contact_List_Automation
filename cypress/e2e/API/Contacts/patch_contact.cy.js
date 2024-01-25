@@ -1,8 +1,5 @@
 import * as ContactData from "../../../support/helpers/contact_data_helper.js";
 import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
-const { faker } = require("@faker-js/faker");
-
-const contactsApiURL = Cypress.env("contactsApiURL");
 
 describe("Contact Partial Update", () => {
   context("PATCH /contacts:id", () => {

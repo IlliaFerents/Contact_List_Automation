@@ -1,5 +1,3 @@
-const contactsApiURL = Cypress.env("contactsApiURL");
-
 describe("Contact Search by ID", () => {
   context("GET /contacts/:id", () => {
     before(() => {
