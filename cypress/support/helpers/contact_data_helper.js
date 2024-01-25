@@ -39,3 +39,17 @@ export const requiredOnlyFields = {
   firstName: faker.person.firstName(),
   lastName: faker.person.lastName(),
 };
+
+export const invalidKeys = {
+  firstame: faker.person.firstName(),
+  lastame: faker.person.lastName(),
+  Birthdate: faker.date.birthdate().toISOString().split("T")[0], // yyyy-mm-dd
+  Email: faker.internet.email().toLowerCase(),
+  Phone: faker.string.numeric(8),
+  Street1: faker.location.streetAddress(),
+  Street2: faker.location.streetAddress(),
+  City: faker.location.city(),
+  StateProvince: faker.location.state(),
+  PostalCode: faker.location.zipCode(),
+  CSSountry: faker.location.country(),
+};
