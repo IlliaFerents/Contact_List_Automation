@@ -18,7 +18,7 @@ describe("Users Deletion", () => {
         });
       });
     });
-    it.only("when passing invalid token to delete a user", { tags: ["@api"] }, function () {
+    it("when passing invalid token to delete a user", { tags: ["@api"] }, function () {
       cy.deleteUser("12345").then((response) => {
         expect(response.status).to.eq(401);
         expect(response.body.error).to.eq("Please authenticate.");
