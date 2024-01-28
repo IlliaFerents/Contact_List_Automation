@@ -9,6 +9,9 @@ Cypress.Commands.add("addUser", (payload) => {
 Cypress.Commands.add("getUser", (token) => {
   api.request("GET", "me", "", token);
 });
+Cypress.Commands.add("updateUser", (payload, token) => {
+  api.request("PATCH", "me", payload, token);
+});
 
 Cypress.Commands.add("deleteUser", (token) => {
   api.request("DELETE", "me", "", token);
@@ -18,6 +21,6 @@ Cypress.Commands.add("loginByApi", (payload) => {
   api.request("POST", "login", payload);
 });
 
-Cypress.Commands.add("logoutByApi", () => {
-  api.request("POST", "logout");
+Cypress.Commands.add("logoutByApi", (token) => {
+  api.request("POST", "logout", "", token);
 });
