@@ -1,0 +1,47 @@
+import * as UserData from "../../../support/helpers/user_data_helper.js";
+
+describe("User Login", { tags: ["@api", "@user"] }, () => {
+  context("POST /login", () => {
+    beforeEach(() => {
+      cy.addUser(UserData.validValues).then((response) => {
+        expect(response.status).to.eq(201);
+        cy.wrap(response.body.user.email).as("email");
+        cy.wrap(UserData.validValues.password).as("password");
+        cy.wrap(response.body.token).as("userToken");
+      });
+    });
+    it("successfully logs in", { tags: ["@smoke"] }, function () {
+      cy.loginByApi({
+        email: this.email,
+        password: this.password,
+      }).then((response) => {
+        expect(response.status).to.eq(200);
+      });
+    });
+    it("error when logging in with deleted user credentials", function () {
+      cy.deleteUser(this.userToken).then((response) => {
+        expect(response.status).to.eq(200);
+
+        cy.loginByApi({
+          email: this.email,
+          password: this.password,
+        }).then((response) => {
+          expect(response.status).to.eq(401);
+        });
+      });
+    });
+    it("error when logging in with invalid credentials", function () {
+      cy.loginByApi({
+        email: UserData.invalidValues.email,
+        password: UserData.invalidValues.password,
+      }).then((response) => {
+        expect(response.status).to.eq(401);
+      });
+    });
+    it("error when logging in with missing credentials", function () {
+      cy.loginByApi({}).then((response) => {
+        expect(response.status).to.eq(401);
+      });
+    });
+  });
+});
