@@ -1,9 +1,9 @@
-describe("Contact Search by ID", () => {
+describe("Contact Search by ID", { tags: ["@api", "@contact"] }, () => {
   context("GET /contacts/:id", () => {
     before(() => {
       cy.deleteAllContacts();
     });
-    it("retrieves a contact by id", { tags: ["@smoke", "@api"] }, function () {
+    it("retrieves a contact by id", { tags: ["@smoke"] }, function () {
       cy.addMultipleContacts(1).then((createdContacts) => {
         const contactID = createdContacts[0]._id;
 
@@ -13,13 +13,13 @@ describe("Contact Search by ID", () => {
         });
       });
     });
-    it("error when retrieving a contact with invalid id", { tags: ["@api"] }, () => {
+    it("error when retrieving a contact with invalid id", () => {
       cy.getContactByID("abcde").then((response) => {
         expect(response.status).to.eq(400);
         expect(response.body).to.eq("Invalid Contact ID");
       });
     });
-    it("error when retrieving a contact with non-exsiting id", { tags: ["@api"] }, () => {
+    it("error when retrieving a contact with non-exsiting id", () => {
       cy.getContactByID("65a595402b31aa00139c1ff5").then((response) => {
         expect(response.status).to.eq(404);
         expect(response.body).to.be.empty;

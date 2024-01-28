@@ -1,7 +1,7 @@
 import * as ContactData from "../../../support/helpers/contact_data_helper.js";
 import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
 
-describe("Contact Update", () => {
+describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
   context("PUT /contacts/:id", () => {
     before(() => {
       cy.deleteAllContacts();
@@ -11,7 +11,7 @@ describe("Contact Update", () => {
         cy.wrap(createdContact[0]._id).as("contactID");
       });
     });
-    it("updates an existing contact with random data", { tags: ["@smoke", "@api"] }, function () {
+    it("updates an existing contact with random data", { tags: ["@smoke"] }, function () {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
@@ -25,7 +25,7 @@ describe("Contact Update", () => {
         });
       });
     });
-    it("updates an existing contact with incomplete data", { tags: ["@api"] }, function () {
+    it("partially updates an existing contact", function () {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 

@@ -1,11 +1,11 @@
 import * as ContactData from "../../../support/helpers/contact_data_helper.js";
 
-describe("Contact Search", () => {
+describe("Contact Search", { tags: ["@api", "@contact"] }, () => {
   context("GET /contacts", () => {
     beforeEach(() => {
       cy.deleteAllContacts();
     });
-    it("retrieves a list of all contacts", { tags: ["@smoke", "@api"] }, () => {
+    it("retrieves a list of all contacts", { tags: ["@smoke"] }, () => {
       cy.addMultipleContacts(4);
 
       cy.getAllContacts().then((response) => {
@@ -17,7 +17,7 @@ describe("Contact Search", () => {
         });
       });
     });
-    it("retrieves an empty list when no contacts added", { tags: ["@api"] }, () => {
+    it("retrieves an empty list when no contacts added", () => {
       cy.getAllContacts().then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body.length).to.eq(0);

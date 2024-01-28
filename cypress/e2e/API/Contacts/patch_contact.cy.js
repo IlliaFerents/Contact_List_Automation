@@ -1,7 +1,7 @@
 import * as ContactData from "../../../support/helpers/contact_data_helper.js";
 import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
 
-describe("Contact Partial Update", () => {
+describe("Contact Partial Update", { tags: ["@api", "@contact"] }, () => {
   context("PATCH /contacts:id", () => {
     before(() => {
       cy.deleteAllContacts();
@@ -11,7 +11,7 @@ describe("Contact Partial Update", () => {
         cy.wrap(createdContact[0]._id).as("contactID");
       });
     });
-    it("patches an existing contact with random data", { tags: ["@smoke", "@api"] }, function () {
+    it("patches an existing contact with random data", { tags: ["@smoke"] }, function () {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
@@ -25,7 +25,7 @@ describe("Contact Partial Update", () => {
         });
       });
     });
-    it("patches all properties of an existing contact", { tags: ["@api"] }, function () {
+    it("patches all properties of an existing contact", function () {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
@@ -39,7 +39,7 @@ describe("Contact Partial Update", () => {
         });
       });
     });
-    it("patches existing contact with missing required fields", { tags: ["@api"] }, function () {
+    it("patches existing contact with missing required fields", function () {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
@@ -58,25 +58,21 @@ describe("Contact Partial Update", () => {
         });
       });
     });
-    it(
-      "returns unmodified contact when patching a contact with invalid keys",
-      { tags: ["@api"] },
-      function () {
-        cy.getContactByID(this.contactID).then((response) => {
-          const originalContactData = response.body;
+    it("returns unmodified contact when patching a contact with invalid keys", function () {
+      cy.getContactByID(this.contactID).then((response) => {
+        const originalContactData = response.body;
 
-          cy.patchContactByID(this.contactID, {
-            firstname: ContactData.validValues.firstName,
-            lastname: ContactData.validValues.lastName,
-            Phone: ContactData.validValues.phone,
-          }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body).to.deep.include(originalContactData);
-          });
+        cy.patchContactByID(this.contactID, {
+          firstname: ContactData.validValues.firstName,
+          lastname: ContactData.validValues.lastName,
+          Phone: ContactData.validValues.phone,
+        }).then((response) => {
+          expect(response.status).to.eq(200);
+          expect(response.body).to.deep.include(originalContactData);
         });
-      }
-    );
-    it("error when patching existing contact with invalid data", { tags: ["@api"] }, function () {
+      });
+    });
+    it("error when patching existing contact with invalid data", function () {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
