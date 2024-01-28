@@ -1,13 +1,13 @@
 import * as UserData from "../../../support/helpers/user_data_helper.js";
 
-describe("Users Search", () => {
+describe("Users Search", { tags: ["@api", "@user"] }, () => {
   context("GET /users/me", () => {
     before(() => {
       cy.addUser(UserData.validValues).then((response) => {
-        cy.wrap(response.body.token).as("accessToken");
+        cy.wrap(response.body.token).as("userToken");
       });
     });
-    it("retrieves a current user when no token passed", { tags: ["@smoke", "@api"] }, function () {
+    it("retrieves a current user when no token passed", function () {
       cy.getUser().then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.deep.include({
@@ -17,8 +17,8 @@ describe("Users Search", () => {
         });
       });
     });
-    it("retrieves a created user when passing token", { tags: ["@smoke", "@api"] }, function () {
-      cy.getUser(this.accessToken).then((response) => {
+    it("retrieves a created user when passing token", function () {
+      cy.getUser(this.userToken).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.deep.include({
           email: UserData.validValues.email,
@@ -27,7 +27,7 @@ describe("Users Search", () => {
         });
       });
     });
-    it("error when passing invalid token to retrieve a user", { tags: ["@api"] }, function () {
+    it("error when passing invalid token to retrieve a user", function () {
       cy.getUser("12345").then((response) => {
         expect(response.status).to.eq(401);
         expect(response.body.error).to.eq("Please authenticate.");
