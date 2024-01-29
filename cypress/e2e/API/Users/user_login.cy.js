@@ -3,18 +3,20 @@ import * as UserData from "../../../support/helpers/user_data_helper.js";
 describe("User Login", { tags: ["@api", "@user"] }, () => {
   context("POST /login", () => {
     beforeEach(() => {
-      cy.addUser(UserData.validValues).then((response) => {
+      const validPayload = UserData.generateValidValues();
+      cy.wrap(validPayload).as("validPayload");
+      cy.wrap(UserData.invalidValues).as("invalidPayload");
+
+      cy.addUser(validPayload).then((response) => {
         expect(response.status).to.eq(201);
+
         cy.wrap(response.body.user.email).as("email");
-        cy.wrap(UserData.validValues.password).as("password");
+        cy.wrap(validPayload.password).as("password");
         cy.wrap(response.body.token).as("userToken");
       });
     });
     it("successfully logs in", { tags: ["@smoke"] }, function () {
-      cy.loginByApi({
-        email: this.email,
-        password: this.password,
-      }).then((response) => {
+      cy.loginByApi(this.email, this.password).then((response) => {
         expect(response.status).to.eq(200);
       });
     });
@@ -22,19 +24,13 @@ describe("User Login", { tags: ["@api", "@user"] }, () => {
       cy.deleteUser(this.userToken).then((response) => {
         expect(response.status).to.eq(200);
 
-        cy.loginByApi({
-          email: this.email,
-          password: this.password,
-        }).then((response) => {
+        cy.loginByApi(this.email, this.password).then((response) => {
           expect(response.status).to.eq(401);
         });
       });
     });
     it("error when logging in with invalid credentials", function () {
-      cy.loginByApi({
-        email: UserData.invalidValues.email,
-        password: UserData.invalidValues.password,
-      }).then((response) => {
+      cy.loginByApi(this.invalidPayload.email, this.invalidPayload.password).then((response) => {
         expect(response.status).to.eq(401);
       });
     });

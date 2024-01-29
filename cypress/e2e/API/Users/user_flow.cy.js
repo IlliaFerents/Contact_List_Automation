@@ -20,6 +20,7 @@ describe("User Flow", { tags: ["@api", "@user"] }, () => {
     cy.getUser(this.userToken).as("getUser");
     cy.get("@getUser").then((getResponse) => {
       expect(getResponse.status).to.eq(200);
+      expect(getResponse.body).not.to.have.property("password");
       expect(this.createdUser).to.deep.include({
         firstName: this.initialUserPayload.firstName,
         lastName: this.initialUserPayload.lastName,
@@ -27,10 +28,7 @@ describe("User Flow", { tags: ["@api", "@user"] }, () => {
       });
     });
 
-    cy.loginByApi({
-      email: this.createdUser.email,
-      password: this.initialPassword,
-    }).as("login");
+    cy.loginByApi(this.createdUser.email, this.initialPassword).as("login");
     cy.get("@login").then((response) => {
       expect(response.status).to.eq(200);
     });
@@ -53,10 +51,7 @@ describe("User Flow", { tags: ["@api", "@user"] }, () => {
         email: this.updatedUserPayload.email,
       });
 
-      cy.loginByApi({
-        email: updatedEmail,
-        password: updatedPassword,
-      }).as("loginAfterUpdate");
+      cy.loginByApi(updatedEmail, updatedPassword).as("loginAfterUpdate");
       cy.get("@loginAfterUpdate").then((response) => {
         expect(response.status).to.eq(200);
       });
