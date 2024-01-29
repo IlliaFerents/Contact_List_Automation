@@ -7,6 +7,10 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
       cy.deleteAllContacts();
     });
     beforeEach(() => {
+      cy.wrap(ContactData.validValues).as("validPayload");
+      cy.wrap(ContactData.invalidValues).as("invalidPayload");
+      cy.wrap(ContactData.requiredOnlyFields).as("requiredOnlyFieldsPayload");
+
       cy.addMultipleContacts(1).then((createdContact) => {
         cy.wrap(createdContact[0]._id).as("contactID");
       });
@@ -15,12 +19,12 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.updateContactByID(this.contactID, ContactData.validValues).then((response) => {
+        cy.updateContactByID(this.contactID, this.validPayload).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).not.to.deep.equal(originalContactData);
 
           cy.getContactByID(this.contactID).then((response) => {
-            expect(response.body).to.deep.include(ContactData.validValues);
+            expect(response.body).to.deep.include(this.validPayload);
           });
         });
       });
@@ -29,12 +33,12 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.updateContactByID(this.contactID, ContactData.requiredOnlyFields).then((response) => {
+        cy.updateContactByID(this.contactID, this.requiredOnlyFieldsPayload).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).not.to.deep.equal(originalContactData);
 
           cy.getContactByID(this.contactID).then((response) => {
-            expect(response.body).to.deep.include(ContactData.requiredOnlyFields);
+            expect(response.body).to.deep.include(this.requiredOnlyFieldsPayload);
           });
         });
       });
@@ -43,12 +47,10 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
       "error when updating an existing contact with missing required fields",
       { tags: ["@api"] },
       function () {
-        cy.getContactByID(this.contactID).then((response) => {
-          const originalContactData = response.body;
-
+        cy.getContactByID(this.contactID).then(() => {
           cy.updateContactByID(this.contactID, {
-            email: ContactData.validValues.email,
-            phone: ContactData.validValues.phone,
+            email: this.validPayload.email,
+            phone: this.validPayload.phone,
           }).then((response) => {
             expect(response.status).to.eq(400);
             assertAPIerrorMessages(response, {
@@ -63,10 +65,8 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
       "error when updating an existing contact with invalid data",
       { tags: ["@api"] },
       function () {
-        cy.getContactByID(this.contactID).then((response) => {
-          const originalContactData = response.body;
-
-          cy.updateContactByID(this.contactID, ContactData.invalidValues).then((response) => {
+        cy.getContactByID(this.contactID).then(() => {
+          cy.updateContactByID(this.contactID, this.invalidPayload).then((response) => {
             expect(response.status).to.eq(400);
             assertAPIerrorMessages(response, {
               email: "Email is invalid",
@@ -82,13 +82,11 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
       "error when updating an existing contact with invalid keys",
       { tags: ["@api"] },
       function () {
-        cy.getContactByID(this.contactID).then((response) => {
-          const originalContactData = response.body;
-
+        cy.getContactByID(this.contactID).then(() => {
           cy.updateContactByID(this.contactID, {
-            firstname: ContactData.validValues.firstName,
-            lastname: ContactData.validValues.lastName,
-            Phone: ContactData.validValues.phone,
+            firstname: this.validPayload.firstName,
+            lastname: this.validPayload.lastName,
+            Phone: this.validPayload.phone,
           }).then((response) => {
             expect(response.status).to.eq(400);
             assertAPIerrorMessages(response, {

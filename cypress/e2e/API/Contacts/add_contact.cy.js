@@ -3,10 +3,16 @@ import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
 
 describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
   context("POST /contacts", () => {
-    it("creates a contact with random data", { tags: ["@smoke"] }, () => {
-      cy.addContact(ContactData.validValues).then((response) => {
+    beforeEach(function () {
+      cy.wrap(ContactData.validValues).as("validPayload");
+      cy.wrap(ContactData.invalidValues).as("invalidPayload");
+      cy.wrap(ContactData.maxLenValues).as("invalidValueLengthPayload");
+      cy.wrap(ContactData.invalidKeys).as("invalidKeysPayload");
+    });
+    it("creates a contact with random data", { tags: ["@smoke"] }, function () {
+      cy.addContact(this.validPayload).then((response) => {
         expect(response.status).to.eq(201);
-        expect(response.body).to.deep.include(ContactData.validValues);
+        expect(response.body).to.deep.include(this.validPayload);
 
         const contactID = response.body._id;
 
@@ -16,10 +22,10 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when adding contact with missing required fields", () => {
+    it("error when adding contact with missing required fields", function () {
       cy.addContact({
-        email: ContactData.validValues.email,
-        phone: ContactData.validValues.phone,
+        email: this.validPayload.email,
+        phone: this.validPayload.phone,
       }).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {
@@ -28,8 +34,8 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when adding contact with with invalid data", () => {
-      cy.addContact(ContactData.invalidValues).then((response) => {
+    it("error when adding contact with with invalid data", function () {
+      cy.addContact(this.invalidPayload).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {
           email: "Email is invalid",
@@ -39,8 +45,8 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when adding contact with field values exceeding maximum length", () => {
-      cy.addContact(ContactData.maxLenValues).then((response) => {
+    it("error when adding contact with field values exceeding maximum length", function () {
+      cy.addContact(this.invalidValueLengthPayload).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {
           firstName: `Path \`firstName\` (\`${ContactData.maxLenValues.firstName}\`) is longer than the maximum allowed length (20).`,
@@ -51,8 +57,8 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when adding contact with invalid keys", () => {
-      cy.addContact(ContactData.invalidKeys).then((response) => {
+    it("error when adding contact with invalid keys", function () {
+      cy.addContact(this.invalidKeysPayload).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {
           lastName: "Path `lastName` is required.",

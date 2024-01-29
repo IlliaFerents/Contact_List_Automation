@@ -7,6 +7,10 @@ describe("Contact Partial Update", { tags: ["@api", "@contact"] }, () => {
       cy.deleteAllContacts();
     });
     beforeEach(() => {
+      cy.wrap(ContactData.validValues).as("validPayload");
+      cy.wrap(ContactData.invalidValues).as("invalidPayload");
+      cy.wrap(ContactData.requiredOnlyFields).as("requiredOnlyFieldsPayload");
+
       cy.addMultipleContacts(1).then((createdContact) => {
         cy.wrap(createdContact[0]._id).as("contactID");
       });
@@ -15,12 +19,12 @@ describe("Contact Partial Update", { tags: ["@api", "@contact"] }, () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.patchContactByID(this.contactID, ContactData.requiredOnlyFields).then((response) => {
+        cy.patchContactByID(this.contactID, this.requiredOnlyFieldsPayload).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).not.to.deep.equal(originalContactData);
 
           cy.getContactByID(this.contactID).then((response) => {
-            expect(response.body).to.deep.include(ContactData.requiredOnlyFields);
+            expect(response.body).to.deep.include(this.requiredOnlyFieldsPayload);
           });
         });
       });
@@ -29,30 +33,28 @@ describe("Contact Partial Update", { tags: ["@api", "@contact"] }, () => {
       cy.getContactByID(this.contactID).then((response) => {
         const originalContactData = response.body;
 
-        cy.patchContactByID(this.contactID, ContactData.validValues).then((response) => {
+        cy.patchContactByID(this.contactID, this.validPayload).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).not.to.deep.equal(originalContactData);
 
           cy.getContactByID(this.contactID).then((response) => {
-            expect(response.body).to.deep.include(ContactData.validValues);
+            expect(response.body).to.deep.include(this.validPayload);
           });
         });
       });
     });
     it("patches existing contact with missing required fields", function () {
-      cy.getContactByID(this.contactID).then((response) => {
-        const originalContactData = response.body;
-
+      cy.getContactByID(this.contactID).then(() => {
         cy.patchContactByID(this.contactID, {
-          email: ContactData.validValues.email,
-          phone: ContactData.validValues.phone,
+          email: this.validPayload.email,
+          phone: this.validPayload.phone,
         }).then((response) => {
           expect(response.status).to.eq(200);
 
           cy.getContactByID(this.contactID).then((response) => {
             expect(response.body).to.deep.include({
-              email: ContactData.validValues.email,
-              phone: ContactData.validValues.phone,
+              email: this.validPayload.email,
+              phone: this.validPayload.phone,
             });
           });
         });
@@ -63,9 +65,9 @@ describe("Contact Partial Update", { tags: ["@api", "@contact"] }, () => {
         const originalContactData = response.body;
 
         cy.patchContactByID(this.contactID, {
-          firstname: ContactData.validValues.firstName,
-          lastname: ContactData.validValues.lastName,
-          Phone: ContactData.validValues.phone,
+          firstname: this.validPayload.firstName,
+          lastname: this.validPayload.lastName,
+          Phone: this.validPayload.phone,
         }).then((response) => {
           expect(response.status).to.eq(200);
           expect(response.body).to.deep.include(originalContactData);
@@ -73,10 +75,8 @@ describe("Contact Partial Update", { tags: ["@api", "@contact"] }, () => {
       });
     });
     it("error when patching existing contact with invalid data", function () {
-      cy.getContactByID(this.contactID).then((response) => {
-        const originalContactData = response.body;
-
-        cy.patchContactByID(this.contactID, ContactData.invalidValues).then((response) => {
+      cy.getContactByID(this.contactID).then(() => {
+        cy.patchContactByID(this.contactID, this.invalidPayload).then((response) => {
           expect(response.status).to.eq(400);
           assertAPIerrorMessages(response, {
             email: "Email is invalid",

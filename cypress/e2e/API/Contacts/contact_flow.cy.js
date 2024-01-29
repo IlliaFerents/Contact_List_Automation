@@ -10,6 +10,7 @@ describe("Contact Flow", { tags: ["@api", "@contact"] }, () => {
       lastName: ContactData.validValues.lastName,
       email: ContactData.validValues.email,
     };
+
     cy.wrap(initialContactPayload).as("initialContactPayload");
     cy.wrap(updatedContactPayload).as("updatedContactPayload");
 
