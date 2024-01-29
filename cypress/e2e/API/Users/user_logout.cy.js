@@ -8,6 +8,7 @@ describe("User Logout", { tags: ["@api", "@user"] }, () => {
 
       cy.addUser({ ...validPayload, password }).then((response) => {
         expect(response.status).to.eq(201);
+
         cy.wrap(response.body.token).as("userToken");
         const email = response.body.user.email; // dynamic
 
