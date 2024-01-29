@@ -17,8 +17,7 @@ describe("User Flow", { tags: ["@api", "@user"] }, () => {
   });
 
   it("creates, gets, logs in, updates, and deletes a user", { tags: ["@smoke"] }, function () {
-    cy.getUser(this.userToken).as("getUser");
-    cy.get("@getUser").then((getResponse) => {
+    cy.getUser(this.userToken).then((getResponse) => {
       expect(getResponse.status).to.eq(200);
       expect(getResponse.body).not.to.have.property("password");
       expect(this.createdUser).to.deep.include({
@@ -28,18 +27,15 @@ describe("User Flow", { tags: ["@api", "@user"] }, () => {
       });
     });
 
-    cy.loginByApi(this.createdUser.email, this.initialPassword).as("login");
-    cy.get("@login").then((response) => {
+    cy.loginByApi(this.createdUser.email, this.initialPassword).then((response) => {
       expect(response.status).to.eq(200);
     });
 
-    cy.updateUser(this.updatedUserPayload, this.userToken).as("updateUser");
-    cy.get("@updateUser").then((updateResponse) => {
+    cy.updateUser(this.updatedUserPayload, this.userToken).then((updateResponse) => {
       expect(updateResponse.status).to.eq(200);
     });
 
-    cy.getUser(this.userToken).as("getUpdatedUser");
-    cy.get("@getUpdatedUser").then((getUpdatedResponse) => {
+    cy.getUser(this.userToken).then((getUpdatedResponse) => {
       const updatedEmail = getUpdatedResponse.body.email;
       const updatedPassword = this.updatedUserPayload.password;
 
@@ -51,19 +47,16 @@ describe("User Flow", { tags: ["@api", "@user"] }, () => {
         email: this.updatedUserPayload.email,
       });
 
-      cy.loginByApi(updatedEmail, updatedPassword).as("loginAfterUpdate");
-      cy.get("@loginAfterUpdate").then((response) => {
+      cy.loginByApi(updatedEmail, updatedPassword).then((response) => {
         expect(response.status).to.eq(200);
       });
     });
 
-    cy.deleteUser(this.userToken).as("deleteUser");
-    cy.get("@deleteUser").then((deleteResponse) => {
+    cy.deleteUser(this.userToken).then((deleteResponse) => {
       expect(deleteResponse.status).to.eq(200);
     });
 
-    cy.getUser(this.userToken).as("getDeletedUser");
-    cy.get("@getDeletedUser").then((getDeletedResponse) => {
+    cy.getUser(this.userToken).then((getDeletedResponse) => {
       expect(getDeletedResponse.status).to.eq(401);
     });
   });

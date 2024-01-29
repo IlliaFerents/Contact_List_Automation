@@ -19,31 +19,26 @@ describe("Contact Flow", { tags: ["@api", "@contact"] }, () => {
     });
   });
   it("creates, gets, updates, and deletes a contact", { tags: ["@smoke"] }, function () {
-    cy.getContactByID(this.contactID).as("getContact");
-    cy.get("@getContact").then((getResponse) => {
+    cy.getContactByID(this.contactID).then((getResponse) => {
       expect(getResponse.status).to.eq(200);
       expect(this.createdContact).to.deep.include(this.initialContactPayload);
     });
 
-    cy.updateContactByID(this.contactID, this.updatedContactPayload).as("updateContact");
-    cy.get("@updateContact").then((updateResponse) => {
+    cy.updateContactByID(this.contactID, this.updatedContactPayload).then((updateResponse) => {
       expect(updateResponse.status).to.eq(200);
     });
 
-    cy.getContactByID(this.contactID).as("getUpdatedContact");
-    cy.get("@getUpdatedContact").then((getUpdatedResponse) => {
+    cy.getContactByID(this.contactID).then((getUpdatedResponse) => {
       expect(getUpdatedResponse.status).to.eq(200);
       expect(getUpdatedResponse.body).not.to.deep.equal(this.createdContact);
       expect(getUpdatedResponse.body).to.deep.include(this.updatedContactPayload);
     });
 
-    cy.deleteContactByID(this.contactID).as("deleteContact");
-    cy.get("@deleteContact").then((deleteResponse) => {
+    cy.deleteContactByID(this.contactID).then((deleteResponse) => {
       expect(deleteResponse.status).to.eq(200);
     });
 
-    cy.getContactByID(this.contactID).as("getDeletedContact");
-    cy.get("@getDeletedContact").then((getDeletedResponse) => {
+    cy.getContactByID(this.contactID).then((getDeletedResponse) => {
       expect(getDeletedResponse.status).to.eq(404);
     });
   });
