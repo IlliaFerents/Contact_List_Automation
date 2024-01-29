@@ -2,8 +2,11 @@ import * as UserData from "../../../support/helpers/user_data_helper.js";
 
 describe("Users Search", { tags: ["@api", "@user"] }, () => {
   context("GET /users/me", () => {
-    before(() => {
-      cy.addUser(UserData.validValues).then((response) => {
+    beforeEach(function () {
+      const validPayload = UserData.generateValidValues();
+      cy.wrap(validPayload).as("validPayload");
+
+      cy.addUser(validPayload).then((response) => {
         cy.wrap(response.body.token).as("userToken");
       });
     });
@@ -21,9 +24,20 @@ describe("Users Search", { tags: ["@api", "@user"] }, () => {
       cy.getUser(this.userToken).then((response) => {
         expect(response.status).to.eq(200);
         expect(response.body).to.deep.include({
-          email: UserData.validValues.email,
-          firstName: UserData.validValues.firstName,
-          lastName: UserData.validValues.lastName,
+          email: this.validPayload.email,
+          firstName: this.validPayload.firstName,
+          lastName: this.validPayload.lastName,
+        });
+      });
+    });
+    it("does not include 'password' prop in response when retrieving a user", function () {
+      cy.getUser(this.userToken).then((response) => {
+        expect(response.status).to.eq(200);
+        expect(response.body).not.to.have.property("password");
+        expect(response.body).to.deep.include({
+          email: this.validPayload.email,
+          firstName: this.validPayload.firstName,
+          lastName: this.validPayload.lastName,
         });
       });
     });
@@ -32,9 +46,9 @@ describe("Users Search", { tags: ["@api", "@user"] }, () => {
         expect(response.status).to.eq(401);
         expect(response.body.error).to.eq("Please authenticate.");
         expect(response.body).not.to.deep.include({
-          email: UserData.validValues.email,
-          firstName: UserData.validValues.firstName,
-          lastName: UserData.validValues.lastName,
+          email: this.validPayload.email,
+          firstName: this.validPayload.firstName,
+          lastName: this.validPayload.lastName,
         });
       });
     });
