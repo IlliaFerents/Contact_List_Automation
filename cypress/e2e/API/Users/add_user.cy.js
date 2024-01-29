@@ -1,4 +1,4 @@
-import * as UserData from "../../../support/helpers/user_data_helper.js";
+import * as UserData from "../../../support/helpers/random_data/user_data_helper.js";
 import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
 
 describe("User Creation", { tags: ["@api", "@user"] }, () => {

@@ -1,4 +1,4 @@
-import * as ContactData from "../../../support/helpers/contact_data_helper.js";
+import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.js";
 import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
 
 describe("Contact Partial Update", { tags: ["@api", "@contact"] }, () => {

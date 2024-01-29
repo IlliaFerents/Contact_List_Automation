@@ -1,4 +1,4 @@
-import * as ContactData from "./contact_data_helper.js";
+import * as ContactData from "../random_data/contact_data_helper.js";
 import ApiRequest from "./api_commands.js";
 
 const api = new ApiRequest(Cypress.env("CONTACTS_API_URL"));

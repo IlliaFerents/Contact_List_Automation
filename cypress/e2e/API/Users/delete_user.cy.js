@@ -1,4 +1,4 @@
-import * as UserData from "../../../support/helpers/user_data_helper.js";
+import * as UserData from "../../../support/helpers/random_data/user_data_helper.js";
 
 describe("User Deletion", { tags: ["@api", "@user"] }, () => {
   context("DELETE /users/me", () => {
