@@ -18,11 +18,19 @@ describe("User Creation", { tags: ["@api", "@user"] }, () => {
           email: this.validPayload.email,
         });
 
-        cy.loginByApi({
-          email: this.validPayload.email,
-          password: this.validPayload.password,
-        }).then((response) => {
+        cy.loginByApi(this.validPayload.email, this.validPayload.password).then((response) => {
           expect(response.status).to.eq(200);
+        });
+      });
+    });
+    it("does not include 'password' prop in response upon user creation", function () {
+      cy.addUser(this.validPayload).then((response) => {
+        expect(response.status).to.eq(201);
+        expect(response.body.user).not.to.have.property("password");
+        expect(response.body.user).to.deep.include({
+          firstName: this.validPayload.firstName,
+          lastName: this.validPayload.lastName,
+          email: this.validPayload.email,
         });
       });
     });
@@ -75,7 +83,7 @@ describe("User Creation", { tags: ["@api", "@user"] }, () => {
         });
       });
     });
-    it("error when creating user with invalid key", function () {
+    it("error when creating user with invalid keys", function () {
       cy.addUser(this.invalidKeysPayload).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {
