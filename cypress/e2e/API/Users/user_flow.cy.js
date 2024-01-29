@@ -1,11 +1,11 @@
 import * as UserData from "../../../support/helpers/user_data_helper.js";
 
 describe("User Flow", { tags: ["@api", "@user"] }, () => {
-  beforeEach(function () {
-    const initialUserPayload = UserData.generateValidValues();
-    const updatedUserPayload = UserData.generateValidValues();
-    const initialPassword = UserData.validValues.password;
+  const initialUserPayload = UserData.generateValidValues();
+  const updatedUserPayload = UserData.generateValidValues();
+  const initialPassword = UserData.validValues.password;
 
+  beforeEach(function () {
     cy.wrap(initialUserPayload).as("initialUserPayload");
     cy.wrap(updatedUserPayload).as("updatedUserPayload");
     cy.wrap(initialPassword).as("initialPassword");

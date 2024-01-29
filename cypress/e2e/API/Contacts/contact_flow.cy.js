@@ -1,15 +1,14 @@
 import * as ContactData from "../../../support/helpers/contact_data_helper.js";
 
 describe("Contact Flow", { tags: ["@api", "@contact"] }, () => {
+  const initialContactPayload = ContactData.generateValidValues();
+  const updatedContactPayload = {
+    firstName: ContactData.validValues.firstName,
+    lastName: ContactData.validValues.lastName,
+    email: ContactData.validValues.email,
+  };
   beforeEach(() => {
     cy.deleteAllContacts();
-
-    const initialContactPayload = ContactData.generateValidValues();
-    const updatedContactPayload = {
-      firstName: ContactData.validValues.firstName,
-      lastName: ContactData.validValues.lastName,
-      email: ContactData.validValues.email,
-    };
 
     cy.wrap(initialContactPayload).as("initialContactPayload");
     cy.wrap(updatedContactPayload).as("updatedContactPayload");
