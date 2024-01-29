@@ -3,14 +3,15 @@ import * as UserData from "../../../support/helpers/user_data_helper.js";
 describe("User Logout", { tags: ["@api", "@user"] }, () => {
   context("POST /logout", () => {
     beforeEach(function () {
-      const password = UserData.validValues.password; // static
+      const validPayload = UserData.generateValidValues();
+      const password = validPayload.password; // static
 
-      cy.addUser({ ...UserData.generateValidValues(), password }).then((response) => {
+      cy.addUser({ ...validPayload, password }).then((response) => {
         expect(response.status).to.eq(201);
         cy.wrap(response.body.token).as("userToken");
         const email = response.body.user.email; // dynamic
 
-        cy.loginByApi({ email, password }).then((response) => {
+        cy.loginByApi(email, password).then((response) => {
           expect(response.status).to.eq(200);
         });
       });
@@ -22,9 +23,13 @@ describe("User Logout", { tags: ["@api", "@user"] }, () => {
       });
     });
 
-    it("error when logging out without providing an access token", function () {
-      cy.logoutByApi().then((response) => {
-        expect(response.status).to.eq(401);
+    it("error when logging out twice in a row", function () {
+      cy.logoutByApi(this.userToken).then((response) => {
+        expect(response.status).to.eq(200);
+
+        cy.logoutByApi(this.userToken).then((response) => {
+          expect(response.status).to.eq(401);
+        });
       });
     });
   });
