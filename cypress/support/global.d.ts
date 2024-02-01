@@ -1,5 +1,4 @@
 declare namespace Cypress {
-
   interface TestConfigOverrides {
     tags?: string[];
   }
@@ -7,7 +6,7 @@ declare namespace Cypress {
   interface SuiteConfigOverrides {
     tags?: string[];
   }
-    
+
   interface Chainable {
     /**
      * Custom command to add a contact via API.
