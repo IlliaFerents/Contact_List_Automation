@@ -1,4 +1,4 @@
-import * as UserData from "../../../support/helpers/random_data/user_data_helper.js";
+import * as UserData from "../../../support/helpers/random_data/user_data_helper.ts";
 
 describe("User Logout", { tags: ["@api", "@user"] }, () => {
   context("POST /logout", () => {

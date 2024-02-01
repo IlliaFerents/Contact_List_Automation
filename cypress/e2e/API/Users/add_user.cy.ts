@@ -1,5 +1,5 @@
-import * as UserData from "../../../support/helpers/random_data/user_data_helper.js";
-import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
+import * as UserData from "../../../support/helpers/random_data/user_data_helper.ts";
+import { assertAPIerrorMessages } from "../../../support/helpers/assertions.ts";
 
 describe("User Creation", { tags: ["@api", "@user"] }, () => {
   context("POST /users", () => {

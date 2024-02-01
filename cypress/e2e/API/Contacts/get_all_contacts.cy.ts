@@ -1,4 +1,4 @@
-import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.js";
+import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.ts";
 
 describe("Contact Search", { tags: ["@api", "@contact"] }, () => {
   context("GET /contacts", () => {

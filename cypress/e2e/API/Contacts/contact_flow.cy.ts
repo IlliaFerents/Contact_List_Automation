@@ -1,4 +1,4 @@
-import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.js";
+import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.ts";
 
 describe("Contact Flow", { tags: ["@api", "@contact"] }, () => {
   const initialContactPayload = ContactData.generateValidValues();

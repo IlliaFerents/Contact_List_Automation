@@ -1,5 +1,5 @@
-import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.js";
-import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
+import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.ts";
+import { assertAPIerrorMessages } from "../../../support/helpers/assertions.ts";
 
 describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
   context("PUT /contacts/:id", () => {

@@ -1,4 +1,4 @@
-import * as UserData from "../../../support/helpers/random_data/user_data_helper.js";
+import * as UserData from "../../../support/helpers/random_data/user_data_helper.ts";
 
 describe("Users Search", { tags: ["@api", "@user"] }, () => {
   context("GET /users/me", () => {

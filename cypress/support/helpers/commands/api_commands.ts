@@ -1,9 +1,10 @@
 export default class ApiRequest {
-  constructor(baseUrl) {
+  baseUrl: string;
+  constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
-  request(method, url = "", payload, token = Cypress.env("BEARER_TOKEN")) {
+  request(method: string, url: string = "", payload?, token: string = Cypress.env("BEARER_TOKEN")) {
     return cy.request({
       method: method,
       url: this.baseUrl + url,

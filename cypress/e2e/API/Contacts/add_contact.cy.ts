@@ -1,5 +1,5 @@
-import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.js";
-import { assertAPIerrorMessages } from "../../../support/helpers/assertions.js";
+import * as ContactData from "../../../support/helpers/random_data/contact_data_helper.ts";
+import { assertAPIerrorMessages } from "../../../support/helpers/assertions.ts";
 
 describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
   context("POST /contacts", () => {
@@ -13,7 +13,6 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
       cy.addContact(this.validPayload).then((response) => {
         expect(response.status).to.eq(201);
         expect(response.body).to.deep.include(this.validPayload);
-
         const contactID = response.body._id;
 
         cy.getContactByID(contactID).then((response) => {
