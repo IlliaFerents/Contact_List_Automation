@@ -6,7 +6,7 @@ describe("User Creation", { tags: ["@api", "@user"] }, () => {
     beforeEach(() => {
       cy.wrap(UserData.generateValidValues()).as("validPayload");
       cy.wrap(UserData.invalidValues).as("invalidPayload");
-      cy.wrap(UserData.maxMinLenValues).as("invalidValueLengthPayload");
+      cy.wrap(UserData.invalidLengthValues).as("invalidValueLengthPayload");
       cy.wrap(UserData.invalidKeys).as("invalidKeysPayload");
     });
     it("creates a user and logs in", { tags: ["@smoke"] }, function () {

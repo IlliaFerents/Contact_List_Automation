@@ -30,7 +30,7 @@ export const generateValidValues = (): ContactData => ({
 
 export const validValues: ContactData = generateValidValues();
 
-export const maxLenValues: Partial<ContactData> = {
+export const invalidLengthValues: Partial<ContactData> = {
   firstName: faker.string.alpha(21),
   lastName: faker.string.alpha(21),
   phone: faker.string.numeric(16),

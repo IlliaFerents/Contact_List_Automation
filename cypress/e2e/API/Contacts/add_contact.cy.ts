@@ -6,7 +6,7 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
     beforeEach(function () {
       cy.wrap(ContactData.validValues).as("validPayload");
       cy.wrap(ContactData.invalidValues).as("invalidPayload");
-      cy.wrap(ContactData.maxLenValues).as("invalidValueLengthPayload");
+      cy.wrap(ContactData.invalidLengthValues).as("invalidValueLengthPayload");
       cy.wrap(ContactData.invalidKeys).as("invalidKeysPayload");
     });
     it("creates a contact with random data", { tags: ["@smoke"] }, function () {
@@ -48,11 +48,11 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
       cy.addContact(this.invalidValueLengthPayload).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {
-          firstName: `Path \`firstName\` (\`${ContactData.maxLenValues.firstName}\`) is longer than the maximum allowed length (20).`,
-          lastName: `Path \`lastName\` (\`${ContactData.maxLenValues.lastName}\`) is longer than the maximum allowed length (20).`,
-          phone: `Path \`phone\` (\`${ContactData.maxLenValues.phone}\`) is longer than the maximum allowed length (15).`,
-          stateProvince: `Path \`stateProvince\` (\`${ContactData.maxLenValues.stateProvince}\`) is longer than the maximum allowed length (20).`,
-          postalCode: `Path \`postalCode\` (\`${ContactData.maxLenValues.postalCode}\`) is longer than the maximum allowed length (10).`,
+          firstName: `Path \`firstName\` (\`${ContactData.invalidLengthValues.firstName}\`) is longer than the maximum allowed length (20).`,
+          lastName: `Path \`lastName\` (\`${ContactData.invalidLengthValues.lastName}\`) is longer than the maximum allowed length (20).`,
+          phone: `Path \`phone\` (\`${ContactData.invalidLengthValues.phone}\`) is longer than the maximum allowed length (15).`,
+          stateProvince: `Path \`stateProvince\` (\`${ContactData.invalidLengthValues.stateProvince}\`) is longer than the maximum allowed length (20).`,
+          postalCode: `Path \`postalCode\` (\`${ContactData.invalidLengthValues.postalCode}\`) is longer than the maximum allowed length (10).`,
         });
       });
     });
