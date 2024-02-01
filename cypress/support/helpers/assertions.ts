@@ -1,4 +1,4 @@
-export function assertAPIerrorMessages(response, expectedErrors) {
+export function assertAPIerrorMessages(response, expectedErrors: object) {
   const actualErrors = response.body.errors;
   expect(actualErrors).to.have.keys(expectedErrors);
 
