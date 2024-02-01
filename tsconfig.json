@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": ["ES6", "DOM"],
+    "allowJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "types": ["cypress", "node"]
+  },
+  "include": ["cypress/**/*.ts", "cypress/support/global.d.ts", "cypress/support/e2e.js"],
+  "exclude": ["node_modules"]
+}
