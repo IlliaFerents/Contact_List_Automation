@@ -6,7 +6,7 @@ Cypress.Commands.add("addUser", (payload) => {
   api.request("POST", "", payload);
 });
 
-Cypress.Commands.add("getUser", (token?) => {
+Cypress.Commands.add("getUser", (token) => {
   api.request("GET", "me", "", token);
 });
 Cypress.Commands.add("updateUser", (payload, token) => {
