@@ -8,6 +8,11 @@
     "allowImportingTsExtensions": true,
     "types": ["cypress", "node"]
   },
-  "include": ["cypress/**/*.ts", "cypress/support/global.d.ts", "cypress/support/e2e.js"],
+  "include": [
+    "cypress/**/*.ts",
+    "cypress/support/global.d.ts",
+    "cypress/support/e2e.js",
+    "cypress/pages/login_page.ts"
+  ],
   "exclude": ["node_modules"]
 }
