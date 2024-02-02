@@ -115,5 +115,12 @@ declare namespace Cypress {
      * @example cy.logoutByApi("userAuthToken")
      */
     logoutByApi(token: string): Chainable<Response>;
+
+    /**
+     * Custom command to select DOM element by id attribute.
+     * @param {string} idValue - Value of id attribute.
+     * @example cy.getByID("email")
+     */
+    getByID(idValue: string): Chainable<JQuery<HTMLElement>>;
   }
 }
