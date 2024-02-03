@@ -13,7 +13,7 @@ declare namespace Cypress {
      * @param {object} payload - Payload for adding a contact.
      * @example cy.addContact(payload)
      */
-    addContact(payload: object): Chainable<Response>;
+    addContact(payload: object, token?: string): Chainable<Response>;
 
     /**
      * Custom command to get a list of all contacts via API.
@@ -70,7 +70,7 @@ declare namespace Cypress {
      * @returns Chainable object containing information about the created contacts.
      * @example cy.addMultipleContacts(3).then(createdContacts => cy.log(createdContacts))
      */
-    addMultipleContacts(numOfContacts: number): Chainable<Response>;
+    addMultipleContacts(numOfContacts: number, token?: string): Chainable<Response>;
 
     /**
      * Custom command to add a user via API.
