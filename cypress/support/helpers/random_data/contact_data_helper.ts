@@ -1,5 +1,15 @@
 const { faker } = require("@faker-js/faker");
 
+export interface ContactInfo {
+  id: string;
+  fullName: string;
+  birthDate: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  city: string;
+  country: string;
+}
 export interface ContactData {
   firstName: string;
   lastName: string;
