@@ -13,13 +13,13 @@ describe("Contact Search by ID", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when retrieving a contact with invalid id", () => {
+    it("error when retrieving a contact with invalid id", { tags: ["@negative"] }, () => {
       cy.getContactByID("abcde").then((response) => {
         expect(response.status).to.eq(400);
         expect(response.body).to.eq("Invalid Contact ID");
       });
     });
-    it("error when retrieving a contact with non-exsiting id", () => {
+    it("error when retrieving a contact with non-exsiting id", { tags: ["@negative"] }, () => {
       cy.getContactByID("65a595402b31aa00139c1ff5").then((response) => {
         expect(response.status).to.eq(404);
         expect(response.body).to.be.empty;

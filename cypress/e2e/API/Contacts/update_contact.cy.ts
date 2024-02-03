@@ -45,7 +45,7 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
     });
     it(
       "error when updating an existing contact with missing required fields",
-      { tags: ["@api"] },
+      { tags: ["@negative"] },
       function () {
         cy.getContactByID(this.contactID).then(() => {
           cy.updateContactByID(this.contactID, {
@@ -63,7 +63,7 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
     );
     it(
       "error when updating an existing contact with invalid data",
-      { tags: ["@api"] },
+      { tags: ["@negative"] },
       function () {
         cy.getContactByID(this.contactID).then(() => {
           cy.updateContactByID(this.contactID, this.invalidPayload).then((response) => {
@@ -80,7 +80,7 @@ describe("Contact Update", { tags: ["@api", "@contact"] }, () => {
     );
     it(
       "error when updating an existing contact with invalid keys",
-      { tags: ["@api"] },
+      { tags: ["@negative"] },
       function () {
         cy.getContactByID(this.contactID).then(() => {
           cy.updateContactByID(this.contactID, {

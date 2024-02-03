@@ -31,17 +31,21 @@ describe("Contact Deletion by ID", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when deleting a contact with invalid id", () => {
+    it("error when deleting a contact with invalid id", { tags: ["@negative"] }, () => {
       cy.deleteContactByID("abcde").then((response) => {
         expect(response.status).to.eq(400);
         expect(response.body).to.eq("Invalid Contact ID");
       });
     });
-    it("returns empty response body when deleting a contact with non-exsiting id", () => {
-      cy.deleteContactByID("65a595402b31aa00139c1ff5").then((response) => {
-        expect(response.status).to.eq(404);
-        expect(response.body).to.be.empty;
-      });
-    });
+    it(
+      "returns empty response body when deleting a contact with non-exsiting id",
+      { tags: ["@negative"] },
+      () => {
+        cy.deleteContactByID("65a595402b31aa00139c1ff5").then((response) => {
+          expect(response.status).to.eq(404);
+          expect(response.body).to.be.empty;
+        });
+      }
+    );
   });
 });

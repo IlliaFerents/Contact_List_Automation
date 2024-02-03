@@ -21,19 +21,23 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when adding contact with missing required fields", function () {
-      cy.addContact({
-        email: this.validPayload.email,
-        phone: this.validPayload.phone,
-      }).then((response) => {
-        expect(response.status).to.eq(400);
-        assertAPIerrorMessages(response, {
-          lastName: "Path `lastName` is required.",
-          firstName: "Path `firstName` is required.",
+    it(
+      "error when adding contact with missing required fields",
+      { tags: ["@negative"] },
+      function () {
+        cy.addContact({
+          email: this.validPayload.email,
+          phone: this.validPayload.phone,
+        }).then((response) => {
+          expect(response.status).to.eq(400);
+          assertAPIerrorMessages(response, {
+            lastName: "Path `lastName` is required.",
+            firstName: "Path `firstName` is required.",
+          });
         });
-      });
-    });
-    it("error when adding contact with with invalid data", function () {
+      }
+    );
+    it("error when adding contact with with invalid data", { tags: ["@negative"] }, function () {
       cy.addContact(this.invalidPayload).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {
@@ -44,19 +48,23 @@ describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when adding contact with field values exceeding maximum length", function () {
-      cy.addContact(this.invalidValueLengthPayload).then((response) => {
-        expect(response.status).to.eq(400);
-        assertAPIerrorMessages(response, {
-          firstName: `Path \`firstName\` (\`${ContactData.invalidLengthValues.firstName}\`) is longer than the maximum allowed length (20).`,
-          lastName: `Path \`lastName\` (\`${ContactData.invalidLengthValues.lastName}\`) is longer than the maximum allowed length (20).`,
-          phone: `Path \`phone\` (\`${ContactData.invalidLengthValues.phone}\`) is longer than the maximum allowed length (15).`,
-          stateProvince: `Path \`stateProvince\` (\`${ContactData.invalidLengthValues.stateProvince}\`) is longer than the maximum allowed length (20).`,
-          postalCode: `Path \`postalCode\` (\`${ContactData.invalidLengthValues.postalCode}\`) is longer than the maximum allowed length (10).`,
+    it(
+      "error when adding contact with field values exceeding maximum length",
+      { tags: ["@negative"] },
+      function () {
+        cy.addContact(this.invalidValueLengthPayload).then((response) => {
+          expect(response.status).to.eq(400);
+          assertAPIerrorMessages(response, {
+            firstName: `Path \`firstName\` (\`${ContactData.invalidLengthValues.firstName}\`) is longer than the maximum allowed length (20).`,
+            lastName: `Path \`lastName\` (\`${ContactData.invalidLengthValues.lastName}\`) is longer than the maximum allowed length (20).`,
+            phone: `Path \`phone\` (\`${ContactData.invalidLengthValues.phone}\`) is longer than the maximum allowed length (15).`,
+            stateProvince: `Path \`stateProvince\` (\`${ContactData.invalidLengthValues.stateProvince}\`) is longer than the maximum allowed length (20).`,
+            postalCode: `Path \`postalCode\` (\`${ContactData.invalidLengthValues.postalCode}\`) is longer than the maximum allowed length (10).`,
+          });
         });
-      });
-    });
-    it("error when adding contact with invalid keys", function () {
+      }
+    );
+    it("error when adding contact with invalid keys", { tags: ["@negative"] }, function () {
       cy.addContact(this.invalidKeysPayload).then((response) => {
         expect(response.status).to.eq(400);
         assertAPIerrorMessages(response, {

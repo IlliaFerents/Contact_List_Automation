@@ -24,7 +24,7 @@ describe("User Logout", { tags: ["@api", "@user"] }, () => {
       });
     });
 
-    it("error when logging out twice in a row", function () {
+    it("error when logging out twice in a row", { tags: ["@negative"] }, function () {
       cy.logoutByApi(this.userToken).then((response) => {
         expect(response.status).to.eq(200);
 

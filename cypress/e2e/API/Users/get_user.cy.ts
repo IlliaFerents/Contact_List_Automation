@@ -41,7 +41,7 @@ describe("Users Search", { tags: ["@api", "@user"] }, () => {
         });
       });
     });
-    it("error when passing invalid token to retrieve a user", function () {
+    it("error when passing invalid token to retrieve a user", { tags: ["@negative"] }, function () {
       cy.getUser("12345").then((response) => {
         expect(response.status).to.eq(401);
         expect(response.body.error).to.eq("Please authenticate.");

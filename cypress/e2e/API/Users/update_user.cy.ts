@@ -46,18 +46,22 @@ describe("User Update", { tags: ["@api", "@user"] }, () => {
         });
       });
     });
-    it("error when updating an existing user with invalid data", function () {
-      cy.updateUser(UserData.invalidValues, this.userToken).then((response) => {
-        expect(response.status).to.eq(400);
-        assertAPIerrorMessages(response, {
-          email: "Email is invalid",
-        });
+    it(
+      "error when updating an existing user with invalid data",
+      { tags: ["@negative"] },
+      function () {
+        cy.updateUser(UserData.invalidValues, this.userToken).then((response) => {
+          expect(response.status).to.eq(400);
+          assertAPIerrorMessages(response, {
+            email: "Email is invalid",
+          });
 
-        cy.getUser(this.userToken).then((response) => {
-          expect(response.status).to.eq(200);
-          expect(response.body).to.deep.equal(this.originalUserData);
+          cy.getUser(this.userToken).then((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body).to.deep.equal(this.originalUserData);
+          });
         });
-      });
-    });
+      }
+    );
   });
 });

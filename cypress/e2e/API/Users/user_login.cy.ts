@@ -20,7 +20,7 @@ describe("User Login", { tags: ["@api", "@user"] }, () => {
         expect(response.status).to.eq(200);
       });
     });
-    it("error when logging in with deleted user credentials", function () {
+    it("error when logging in with deleted user credentials", { tags: ["@negative"] }, function () {
       cy.deleteUser(this.userToken).then((response) => {
         expect(response.status).to.eq(200);
 
@@ -29,13 +29,13 @@ describe("User Login", { tags: ["@api", "@user"] }, () => {
         });
       });
     });
-    it("error when logging in with invalid credentials", function () {
+    it("error when logging in with invalid credentials", { tags: ["@negative"] }, function () {
       cy.loginByApi(this.invalidPayload.email, this.invalidPayload.password).then((response) => {
         expect(response.status).to.eq(401);
       });
     });
-    it("error when logging in with missing credentials", function () {
-      cy.loginByApi({}).then((response) => {
+    it("error when logging in with missing credentials", { tags: ["@negative"] }, function () {
+      cy.loginByApi("", "").then((response) => {
         expect(response.status).to.eq(401);
       });
     });

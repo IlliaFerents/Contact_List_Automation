@@ -74,18 +74,22 @@ describe("Contact Partial Update", { tags: ["@api", "@contact"] }, () => {
         });
       });
     });
-    it("error when patching existing contact with invalid data", function () {
-      cy.getContactByID(this.contactID).then(() => {
-        cy.patchContactByID(this.contactID, this.invalidPayload).then((response) => {
-          expect(response.status).to.eq(400);
-          assertAPIerrorMessages(response, {
-            email: "Email is invalid",
-            phone: "Phone number is invalid",
-            birthdate: "Birthdate is invalid",
-            postalCode: "Postal code is invalid",
+    it(
+      "error when patching existing contact with invalid data",
+      { tags: ["@negative"] },
+      function () {
+        cy.getContactByID(this.contactID).then(() => {
+          cy.patchContactByID(this.contactID, this.invalidPayload).then((response) => {
+            expect(response.status).to.eq(400);
+            assertAPIerrorMessages(response, {
+              email: "Email is invalid",
+              phone: "Phone number is invalid",
+              birthdate: "Birthdate is invalid",
+              postalCode: "Postal code is invalid",
+            });
           });
         });
-      });
-    });
+      }
+    );
   });
 });
