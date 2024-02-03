@@ -1,4 +1,4 @@
-import ApiRequest from "./api_commands";
+import ApiRequest from "./api_request";
 
 const api = new ApiRequest(Cypress.env("USERS_API_URL"));
 
