@@ -1,10 +1,10 @@
 import * as ContactData from "../random_data/contact_data_helper.ts";
-import ApiRequest from "./api_commands.ts";
+import ApiRequest from "./api_request";
 
 const api = new ApiRequest(Cypress.env("CONTACTS_API_URL"));
 
-Cypress.Commands.add("addContact", (payload) => {
-  api.request("POST", "", payload);
+Cypress.Commands.add("addContact", (payload, token) => {
+  api.request("POST", "", payload, token);
 });
 
 Cypress.Commands.add("getAllContacts", () => {
@@ -41,11 +41,11 @@ Cypress.Commands.add("deleteAllContacts", () => {
   });
 });
 
-Cypress.Commands.add("addMultipleContacts", (numOfContacts) => {
+Cypress.Commands.add("addMultipleContacts", (numOfContacts, token) => {
   const createdContacts = [];
 
   for (let i = 0; i < numOfContacts; i++) {
-    cy.addContact(ContactData.generateValidValues()).then((response) => {
+    cy.addContact(ContactData.generateValidValues(), token).then((response) => {
       createdContacts.push(response.body);
     });
   }
