@@ -12,6 +12,7 @@ module.exports = defineConfig({
   },
   projectId: "g6at4p",
   e2e: {
+    baseUrl: "https://thinking-tester-contact-list.herokuapp.com",
     watchForFileChanges: false,
     setupNodeEvents(on, config) {
       require("cypress-mochawesome-reporter/plugin")(on);
