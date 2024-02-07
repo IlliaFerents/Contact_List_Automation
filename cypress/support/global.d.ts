@@ -121,6 +121,30 @@ declare namespace Cypress {
      * @param {string} idValue - Value of id attribute.
      * @example cy.getByID("email")
      */
+
     getByID(idValue: string): Chainable<JQuery<HTMLElement>>;
+    /**
+     * Custom Cypress command to log in with the provided user credentials.
+     * It uses the loginByApi command to authenticate the user via API and then visits the /contactList page
+     * @param {string} email - User email.
+     * @param {string} password - User password.
+     * @example
+     * cy.login("test@test.com", "123456")
+     */
+
+    login(email: string, password: string): Chainable<Any>;
+    /**
+     * Custom Cypress command to log in with a dynamically generated user.
+     * @example
+     * cy.loginWithGeneratedUser()
+     */
+
+    loginWithGeneratedUser(): Chainable<Any>;
+    /**
+     * Custom Cypress command to fill a form with the provided inputs.
+     * @param {object} inputs - An object containing input field selectors as keys and their corresponding values to fill.
+     * @example cy.get('form').fillForm({ ["#username"]: "user", ["password"]: "pass" });
+     */
+    fillForm(inputs: object): Chainable<JQuery<HTMLFormElement>>;
   }
 }
