@@ -12,7 +12,7 @@ describe("User Login", { tags: ["@ui", "@user"] }, () => {
       cy.wrap(createdUser.body.user.email).as("email");
       cy.wrap(validUserData.password).as("password");
     });
-    cy.visit(Cypress.env("BASE_URL"));
+    cy.visit("/");
   });
   it("logs in with valid credentials", { tags: ["@smoke"] }, function () {
     loginPage.fillEmail(this.email).should("have.value", this.email);
