@@ -4,6 +4,8 @@ import { assertAPIerrorMessages } from "../../../support/helpers/assertions.ts";
 describe("Contact Creation", { tags: ["@api", "@contact"] }, () => {
   context("POST /contacts", () => {
     beforeEach(function () {
+      cy.deleteAllContacts();
+
       cy.wrap(ContactData.validValues).as("validPayload");
       cy.wrap(ContactData.invalidValues).as("invalidPayload");
       cy.wrap(ContactData.invalidLengthValues).as("invalidValueLengthPayload");
