@@ -18,7 +18,7 @@ Cypress.Commands.add("deleteUser", (token) => {
 });
 
 Cypress.Commands.add("loginByApi", (email, password) => {
-  api.request("POST", "login", { email: email, password: password });
+  api.request("POST", "login", { email, password });
 });
 
 Cypress.Commands.add("logoutByApi", (token) => {
